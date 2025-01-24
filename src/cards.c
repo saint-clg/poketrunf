@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "raylib.h"
 #include "cards.h"
 
@@ -56,7 +57,9 @@ Hability hability[TOTAL_HABILITIES] = {
     {"BLIZZARD", "Desencadeia uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos e enfraquecendo suas ações.", blizzard}
 };
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards) {
+// void ShowCards_panel(Card card[], ){};
+
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards){
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
     int cardHeight = 180;
@@ -76,7 +79,7 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
         if(activate_filters.check_search){
         
-            if(strcasecmp(search_name, card[i].nome)) filter = false;
+            if(strcasecmp(activate_filters.search_name, card[i].nome)) filter = false;
         }
 
         if (activate_filters.check_type[0]) {
@@ -97,7 +100,7 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
                 if (card[i].altura < activate_filters.min_filter || card[i].altura > activate_filters.max_filter) filter = false;
             }
             if (activate_filters.check_stats[4]) {
-                if (card[i].peso < activate_filters.min_filter || card[i].peso >   activate_filters.max_filter) filter = false;
+                if (card[i].peso < activate_filters.min_filter || card[i].peso >  activate_filters.max_filter) filter = false;
             }
         }
 
@@ -110,10 +113,15 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
             int posX = startX + (cardWidth + padding) * col;
             int posY = startY + (cardHeight + padding) * row;
 
+            Rectangle CardRect  = {posX, posY, cardWidth, cardHeight};
+
             DrawTextureRec(TextureCards[i].texture, (Rectangle){0, 0, cardWidth, -cardHeight}, (Vector2){posX, posY}, WHITE);
+
+            if(CheckCollisionPointRec(GetMousePosition(),CardRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+
+            }
+
             s++;
         }
     }
 }
-
-

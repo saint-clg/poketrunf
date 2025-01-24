@@ -158,24 +158,24 @@ int main(){
             DrawRectangle(10,10,280,580, WHITE);// card search shape    
             DrawRectangle(10,10,280,390, GRAY);// card vizualizer
             DrawRectangle(300,10,490,580, LIGHTGRAY);
-            //GuiTextBox((Rectangle){35,435,230,30}, "search...",  20, 1);// search box
            
-            // BOTÃO PARA FILTRAR
+            //BOTÃO PARA FILTRAR
             if(GuiButton((Rectangle){225,435,40,30},"#47#")){
 
                 show_filters = !show_filters;
             };
 
             //CAIXA DE TEXTO PARA PESQUISA DO NOME
-            if (GuiTextBox((Rectangle){35,435,230,30}, &filters_deck.search_name, sizeof(filters_deck.search_name), search_box)){
+            if (GuiTextBox((Rectangle){35,435,190,30}, filters_deck.search_name, 
+                            sizeof(filters_deck.search_name), search_box)){
 
                 if(IsKeyPressed(KEY_ENTER)){
                     search_box = false;
                     filters_deck.check_search = true;
-                    if(filters_deck.search_name == '\0'){
+                    if(!strlen(filters_deck.search_name) || !strcasecmp(filters_deck.search_name, " ")){
                         filters_deck.check_search = false;
                     }
-                }else search_box = true;
+                }else search_box = true; //LÓGICA DE PESQUISA POR ENTER E CAIXA VAZIA
             }
             
             ShowCards_Menu(deck, filters_deck, TextureCards, TOTAL_CARDS);
