@@ -1,0 +1,33 @@
+nome,tipo,numero,trunfo,hp,ataque,peso,altura,habilidade,img
+Alola Ninetales,G,1,0,65,67,19.9,1.1,0,alola_ninetales.png
+Articuno,G,2,0,90,85,55.4,1.7,0,articuno.png
+Glalie,G,3,0,80,70,110.0,1.5,0,glalie.png
+Glaceon,G,4,0,65,60,25.9,0.8,0,glaceon.png
+Vaniluxe,G,5,0,71,95,57.5,1.1,0,vaniluxe.png
+Kyurem,G,6,1,125,130,220.0,2.6,0,kyurem.png
+Mr.Rime & Mr.Mime,G,7,0,80,85,58.0,1.5,0,mr_rime_mime.png
+Empoleon,G,8,0,85,86,84.5,1.7,0,empoleon.png
+Salamence,D,1,0,95,135,102.6,1.5,0,salamence.png
+Rayquaza,D,2,1,105,150,206.5,7.0,0,rayquaza.png
+Garchomp,D,3,0,108,130,95.0,1.9,0,garchomp.png
+Hydreigon,D,4,0,92,125,160.0,1.8,0,hydreigon.png
+Dragapult,D,5,0,88,120,50.0,2.0,0,dragapult.png
+Goodra,D,6,0,90,100,150.0,2.0,0,goodra.png
+Latios & Latias,D,7,0,80,130,40.0,1.8,0,latios_latias.png
+Dragonite,D,8,0,91,134,210.0,2.2,0,dragonite.png
+Alakazam,P,1,0,55,50,48.0,1.5,0,alakazam.png
+Mewtwo,P,2,1,106,150,122.0,2.0,0,mewtwo.png
+Espeon,P,3,0,65,65,26.5,0.9,0,espeon.png
+Gardevoir,P,4,0,68,85,48.4,1.6,0,gardevoir.png
+Metagross,P,5,0,80,135,220.0,1.6,0,metagross.png
+Solrock & Lunatone,P,6,0,90,95,97.0,1.2,0,solrock_lunatone.png
+Hoopa,P,7,0,80,110,30.0,0.6,0,hoopa.png
+Jirachi,P,8,0,100,100,11.0,0.6,0,jirachi.png
+Lucario,L,1,0,70,110,54.0,1.2,0,lucario.png
+Machamp,L,2,0,90,130,130.0,1.6,0,machamp.png
+Toxicroak,L,3,0,83,106,44.4,1.3,0,toxicroak.png
+Hawlucha,L,4,0,78,92,21.5,0.8,0,hawlucha.png
+Urshifu,L,5,1,100,130,105.0,1.9,0,urshifu.png
+Throh & Sawk,L,6,0,120,100,55.0,1.5,0,throh_sawk.png
+Scrafty,L,7,0,65,90,30.0,1.1,0,scrafty.png
+Primeape,L,8,0,65,105,32.0,1.0,0,primeape.png
