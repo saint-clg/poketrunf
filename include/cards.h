@@ -64,11 +64,13 @@ typedef struct {
 typedef struct{
     //TYPES FILTER
     bool check_type[5]; // 0=activate 1=ICE 2=
+    bool check_stats[5];
+    bool check_search;
 
     //STATUS FILTER
     float min_filter, max_filter;
     char min_filterText[35], max_filterText[35];
-    bool check_stats[5];
+    char search_name[40];
 }Filters; // FILTROS PARA A PESQUISA
 
 extern Hability hability[TOTAL_HABILITIES];

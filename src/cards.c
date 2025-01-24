@@ -73,6 +73,12 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
         filter = true;
 
         // Lógica de filtros
+
+        if(activate_filters.check_search){
+        
+            if(strcasecmp(search_name, card[i].nome)) filter = false;
+        }
+
         if (activate_filters.check_type[0]) {
             if (activate_filters.check_type[1] && card[i].tipo != 'G') filter = false;
             if (activate_filters.check_type[2] && card[i].tipo != 'L') filter = false;

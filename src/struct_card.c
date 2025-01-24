@@ -113,16 +113,16 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         snprintf(cardText, sizeof(cardText), "%c %s #%d", card[i].tipo, card[i].nome, card[i].numero);
         DrawText(cardText, 7, 7, 1, BLACK);
 
-        snprintf(cardText, sizeof(cardText), "HP: %.1f", card[i].hp);
+        snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
         DrawText(cardText, 8, 100, 6, BLACK);
 
-        snprintf(cardText, sizeof(cardText), "ATK: %.1f", card[i].ataque);
+        snprintf(cardText, sizeof(cardText), "ATK: %d, card[i].ataque);
         DrawText(cardText, 8, 115, 6, BLACK);
 
-        snprintf(cardText, sizeof(cardText), "ALT: %d", card[i].altura);
+        snprintf(cardText, sizeof(cardText), "ALT: %.2f", card[i].altura);
         DrawText(cardText, 55, 100, 6, BLACK); 
 
-        snprintf(cardText, sizeof(cardText), "PSO: %d", card[i].peso);
+        snprintf(cardText, sizeof(cardText), "PSO: %.2f", card[i].peso);
         DrawText(cardText, 55, 115, 6, BLACK);
 
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);

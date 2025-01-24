@@ -63,11 +63,12 @@ int main(){
 
     GameScreen CurrentScreen = MAIN_MENU;
     int walk_menu = 0, screenWidth = GetScreenWidth();
-    const char *menu_options[] = {"play", "deck", "options", "exit"};
+    const char *menu_options[] = {"Play", "Deck", "Options", "Exit"};
     Font font_mainmenu = LoadFont(".\\assets\\fonts\\Minecraft.ttf");
     Sound walk_menuSound = LoadSound(".\\assets\\sounds\\move_menu.wav");
     Sound enter_menuSound = LoadSound(".\\assets\\sounds\\enter_menu.wav");
     Texture2D logo = LoadTexture(".\\assets\\img\\logo.png");
+    Texture2D background_mainmenu = LoadTexture(".\\assets\\img\\background_mainmenu.png");
 
 //---------------------------------------------------------------------------------------------WHILE DO JOGO
     
@@ -78,6 +79,7 @@ int main(){
             BeginDrawing();
             
             ClearBackground((Color)WHITE);
+            DrawTexture(background_mainmenu, 0,0, WHITE);
             DrawTexture(logo, (screenWidth - logo.width) / 2, 50, WHITE);
 
             for (int i = 0; i < 4; i++) {
@@ -132,13 +134,16 @@ int main(){
             static Filters filters_deck = {
                 .check_type = {false, false, false, false, false},
                 .check_stats = {false, false, false, false, false},
+                .check_search = false,
                 .min_filter = 0.0f,
                 .max_filter = 999.0f,
                 .min_filterText = "MIN...",
-                .max_filterText = "MAX..."
+                .max_filterText = "MAX...",
+                .search_name = "Search..."
             };
 
             static bool show_filters = false;
+            static bool search_box = false;
             static bool minFilterEditMode = false;
             static bool maxFilterEditMode = false;
 
@@ -160,6 +165,18 @@ int main(){
 
                 show_filters = !show_filters;
             };
+
+            //CAIXA DE TEXTO PARA PESQUISA DO NOME
+            if (GuiTextBox((Rectangle){35,435,230,30}, &filters_deck.search_name, sizeof(filters_deck.search_name), search_box)){
+
+                if(IsKeyPressed(KEY_ENTER)){
+                    search_box = false;
+                    filters_deck.check_search = true;
+                    if(filters_deck.search_name == '\0'){
+                        filters_deck.check_search = false;
+                    }
+                }else search_box = true;
+            }
             
             ShowCards_Menu(deck, filters_deck, TextureCards, TOTAL_CARDS);
 
