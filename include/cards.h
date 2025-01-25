@@ -25,6 +25,8 @@ typedef struct {
     Texture2D dragon_background;
     Texture2D pisych_background;
     Texture2D fighting_background;
+    Texture2D super_trunfo_boards;
+    Texture2D cards_boards;
 }Backgrounds_cards;
 
 typedef enum {  DISABLE, // #generic #hability

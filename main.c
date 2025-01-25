@@ -155,9 +155,9 @@ int main(){
                 CurrentScreen = MAIN_MENU;
             }
 
-            DrawRectangle(10,10,280,580, WHITE);// card search shape    
+            DrawRectangle(10,10,280,580, DARKGRAY);// card search shape    
             DrawRectangle(10,10,280,390, GRAY);// card vizualizer
-            DrawRectangle(300,10,490,580, LIGHTGRAY);
+            DrawRectangle(300,10,490,580, GRAY);
            
             //BOTÃO PARA FILTRAR
             if(GuiButton((Rectangle){225,435,40,30},"#47#")){

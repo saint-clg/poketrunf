@@ -57,8 +57,6 @@ Hability hability[TOTAL_HABILITIES] = {
     {"BLIZZARD", "Desencadeia uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos e enfraquecendo suas ações.", blizzard}
 };
 
-// void ShowCards_panel(Card card[], ){};
-
 void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards){
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
@@ -66,6 +64,8 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
     int padding = 10;  // Espaço entre as cartas
     int startX = 310;   // Posição inicial X
     int startY = 20 + scrollOffset;   // Posição inicial Y
+
+    static int selectIndex = -1;
 
     bool filter = true;
 
@@ -118,10 +118,18 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
             DrawTextureRec(TextureCards[i].texture, (Rectangle){0, 0, cardWidth, -cardHeight}, (Vector2){posX, posY}, WHITE);
 
             if(CheckCollisionPointRec(GetMousePosition(),CardRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-
+                
+                selectIndex = i;
             }
 
             s++;
         }
+    }
+
+    if(selectIndex != -1){
+        Rectangle CardVizualizer = {10,10,280,390};
+        DrawTexturePro(TextureCards[selectIndex].texture, (Rectangle){0,0,cardWidth, - cardHeight}, 
+                        CardVizualizer,(Vector2){0,0}, 0.0f, WHITE);
+
     }
 }

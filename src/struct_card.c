@@ -70,6 +70,10 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
     
     backgrounds_cards->pisych_background = LoadTexture(".\\assets\\cards\\img\\pisych_background.png");
 
+    backgrounds_cards->cards_boards = LoadTexture(".\\assets\\cards\\img\\board_card.png");
+
+    backgrounds_cards->super_trunfo_boards = LoadTexture(".\\assets\\cards\\img\\board_card_SP.png");
+
     // Carregar as imagens dos Pokémon uma vez
     for (int i = 0; i < totalCards; i++) {
         char PathPokemon_img[40]; // Caminho para a imagem do Pokémon
@@ -83,7 +87,6 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
 
 void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], int TOTAL_CARDS){
     
-    char PathPokemon_img[40];// caminho para a imagem do pokemon
     for(int i =0; i < TOTAL_CARDS; i++){
 
         CardTexture[i] = LoadRenderTexture(110,180); // renderiza uma nova textura
@@ -104,32 +107,37 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         //DrawRectangle(5,85,100,90,LIGHTGRAY); // status
         //DrawRectangle(5,130,100,45,GRAY); // habilidade
 
-        DrawTexture(background_cards.card_background, 5,5, WHITE); // fundo da carta
+        DrawTexture(background_cards.card_background, 5,20, WHITE); // fundo da carta
         
-        DrawTextureEx(poke_img[i], (Vector2){10,5}, 0.0f, 0.9f, WHITE); // pokemon
+        DrawTextureEx(poke_img[i], (Vector2){10,22}, 0.0f, 0.9f, WHITE); // pokemon
+
+        if(card[i].trunfo == 1){
+
+            DrawTexture(background_cards.super_trunfo_boards,0,0,WHITE);
+        }else DrawTexture(background_cards.cards_boards,0,0,WHITE);
 
         char cardText[200];
         
         snprintf(cardText, sizeof(cardText), "%c %s #%d", card[i].tipo, card[i].nome, card[i].numero);
-        DrawText(cardText, 7, 7, 1, BLACK);
+        DrawText(cardText, 5, 5, 1, BLACK);
 
         snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
-        DrawText(cardText, 8, 100, 6, BLACK);
-
-        snprintf(cardText, sizeof(cardText), "ATK: %d", card[i].ataque);
         DrawText(cardText, 8, 115, 6, BLACK);
 
+        snprintf(cardText, sizeof(cardText), "ATK: %d", card[i].ataque);
+        DrawText(cardText, 8, 130, 6, BLACK);
+
         snprintf(cardText, sizeof(cardText), "ALT: %.2f", card[i].altura);
-        DrawText(cardText, 55, 100, 6, BLACK); 
+        DrawText(cardText, 55, 115, 6, BLACK); 
 
         snprintf(cardText, sizeof(cardText), "PSO: %.2f", card[i].peso);
-        DrawText(cardText, 55, 115, 6, BLACK);
+        DrawText(cardText, 55, 130, 6, BLACK);
 
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
-        DrawText(cardText, 8, 133, 10, BLACK);
+        DrawText(cardText, 8, 140, 10, BLACK);
 
         snprintf(cardText, sizeof(cardText), "%s", hability[card[i].habilidade].text);
-        DrawText(cardText, 8, 143, 10, BLACK);
+        DrawText(cardText, 8, 150, 10, BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta
