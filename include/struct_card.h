@@ -14,4 +14,8 @@ int CountLines(FILE *arq_dat);
 
 void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *pokemon_img, int totalCards);
 
-void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], int TOTAL_CARDS);
+void DrawWrappedText(   Font font, const char *text, int posX, int posY, int fontSize, int maxWidth, int lineSpacing, 
+                        Color color);
+
+void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], 
+                Font poke_font, int TOTAL_CARDS);

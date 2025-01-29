@@ -57,7 +57,8 @@ Hability hability[TOTAL_HABILITIES] = {
     {"BLIZZARD", "Desencadeia uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos e enfraquecendo suas ações.", blizzard}
 };
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards){
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, 
+                    Font poke_font){
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
     int cardHeight = 180;

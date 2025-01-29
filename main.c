@@ -58,8 +58,9 @@ int main(){
     Texture2D pokemon_img[TOTAL_CARDS];
     Backgrounds_cards backgrounds_cards;
     InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS);
+    Font poke_font = LoadFont(".\\assets\\fonts\\Symtext.ttf");
     RenderTexture2D TextureCards[TOTAL_CARDS];
-    CreatCards(deck,backgrounds_cards,pokemon_img,TextureCards,TOTAL_CARDS);
+    CreatCards(deck,backgrounds_cards,pokemon_img,TextureCards,poke_font,TOTAL_CARDS);
 
     GameScreen CurrentScreen = MAIN_MENU;
     int walk_menu = 0, screenWidth = GetScreenWidth();
@@ -178,7 +179,7 @@ int main(){
                 }else search_box = true; //LÓGICA DE PESQUISA POR ENTER E CAIXA VAZIA
             }
             
-            ShowCards_Menu(deck, filters_deck, TextureCards, TOTAL_CARDS);
+            ShowCards_Menu(deck, filters_deck, TextureCards, TOTAL_CARDS, poke_font);
 
             if (IsKeyDown(KEY_LEFT_CONTROL) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
                 scrollOffset += GetMouseDelta().y;  // Deslocamento conforme movimento do mouse

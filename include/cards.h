@@ -80,6 +80,6 @@ extern float scrollOffset;
 
 //FUNCTIONS -----------------------------------------------------------------------------------------------------
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards);
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, Font poke_font);
 
 #endif // CARDS_H

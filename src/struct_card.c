@@ -85,7 +85,38 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
     }
 }
 
-void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], int TOTAL_CARDS){
+void DrawWrappedText(   Font font, const char *text, int posX, int posY, int fontSize, int maxWidth, int lineSpacing, 
+                        Color color){
+    int length = strlen(text);
+    char buffer[256]; // Buffer temporário para armazenar a linha
+    int lineStart = 0;
+    int bufferIndex = 0;
+    int currentX = posX;
+    int currentY = posY;
+
+    for (int i = 0; i <= length; i++) {
+        buffer[bufferIndex] = text[i];
+
+        // Quebra a linha se atingir a largura máxima ou encontrar uma quebra de linha manual
+        if (MeasureTextEx(font, buffer, fontSize, 1).x > maxWidth || text[i] == '\n' || text[i] == '\0') {
+            buffer[bufferIndex] = '\0'; // Finaliza a linha
+
+            DrawTextEx(font, buffer, (Vector2){ currentX, currentY }, fontSize, 1, color);
+
+            currentY += fontSize + lineSpacing; // Avança para a próxima linha
+            bufferIndex = 0; // Reinicia o buffer para a próxima linha
+
+            if (text[i] == ' ') {
+                lineStart = i + 1; // Pula o espaço
+            }
+        } else {
+            bufferIndex++;
+        }
+    }
+}
+
+void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], 
+                Font poke_font, int TOTAL_CARDS){
     
     for(int i =0; i < TOTAL_CARDS; i++){
 
@@ -119,25 +150,25 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         char cardText[200];
         
         snprintf(cardText, sizeof(cardText), "%c %s #%d", card[i].tipo, card[i].nome, card[i].numero);
-        DrawText(cardText, 5, 5, 1, BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){6,6},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
-        DrawText(cardText, 8, 115, 6, BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){8,115},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "ATK: %d", card[i].ataque);
-        DrawText(cardText, 8, 130, 6, BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){8,130},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "ALT: %.2f", card[i].altura);
-        DrawText(cardText, 55, 115, 6, BLACK); 
+        DrawTextEx(poke_font,cardText,(Vector2){53,115},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "PSO: %.2f", card[i].peso);
-        DrawText(cardText, 55, 130, 6, BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){53,130},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
-        DrawText(cardText, 8, 140, 10, BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){8,140},11,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "%s", hability[card[i].habilidade].text);
-        DrawText(cardText, 8, 150, 10, BLACK);
+        DrawWrappedText(poke_font,cardText,8,145,10,100,1,BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta
