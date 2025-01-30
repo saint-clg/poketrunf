@@ -58,7 +58,7 @@ int main(){
     Texture2D pokemon_img[TOTAL_CARDS];
     Backgrounds_cards backgrounds_cards;
     InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS);
-    Font poke_font = LoadFont(".\\assets\\fonts\\Symtext.ttf");
+    Font poke_font = LoadFont(".\\assets\\fonts\\GillSans Condensed.otf");
     RenderTexture2D TextureCards[TOTAL_CARDS];
     CreatCards(deck,backgrounds_cards,pokemon_img,TextureCards,poke_font,TOTAL_CARDS);
 
