@@ -143,7 +143,22 @@ int main(){
                 .search_name = "Search..."
             };
 
+            static CreatMenu CreatCard_buffer = {
+
+                .b_name = "random_name",
+                .b_type = {false,false,false,false},
+                .b_trunfo = false,
+                .b_atk = 0,
+                .b_hp = 0,
+                .b_pso = 0,
+                .b_alt = 0,
+                .b_hab = DISABLE,
+                .p_img = "none"
+            };
+
             static bool show_filters = false;
+            static bool addNewCard_menu = false;
+            static bool editCard_menu = false;
             static bool search_box = false;
             static bool minFilterEditMode = false;
             static bool maxFilterEditMode = false;
@@ -164,6 +179,17 @@ int main(){
             if(GuiButton((Rectangle){225,435,40,30},"#47#")){
 
                 show_filters = !show_filters;
+            };
+
+            //BOTÃO PARA ADICIONAR CARTAS
+            if(GuiButton((Rectangle){35,405,105,25},"AddNewCard")){
+
+                addNewCard_menu = !addNewCard_menu;
+            };
+
+            if(GuiButton((Rectangle){160,405,105,25},"Delet/Modify Card")){
+
+                editCard_menu  = !editCard_menu;
             };
 
             //CAIXA DE TEXTO PARA PESQUISA DO NOME
@@ -192,6 +218,49 @@ int main(){
             if (scrollOffset > 0) scrollOffset = 0;
             if (scrollOffset < -((TOTAL_CARDS / 4) * (180 + 10) - 580)) scrollOffset = -((TOTAL_CARDS / 4) * (180 + 10) - 580);
 
+            if(addNewCard_menu){
+                
+                static bool name_box = false;
+                static bool img_box = false;
+
+                if(GuiWindowBox((Rectangle){120,100,560,400},"Creating Menu")) addNewCard_menu = false;
+
+                DrawRectangle(130,120,540,370, DARKGRAY);
+
+                if(GuiTextBox(  (Rectangle){400,140,250,40}, CreatCard_buffer.b_name, sizeof(CreatCard_buffer.b_name), 
+                                name_box)){
+
+                    if(IsKeyPressed(KEY_ENTER)){
+
+                        name_box = false;
+
+                    }else name_box = true;
+                }
+
+                DrawRectangle(150,140,230,300, BLACK);
+                //LIGAR 1 DESLIGA OS OUTROS
+                if(GuiCheckBox((Rectangle){400,190,40,40}, "ICE",&CreatCard_buffer.b_type[0]));
+                if(GuiCheckBox((Rectangle){525,190,40,40}, "FIGHTING",&CreatCard_buffer.b_type[1]));
+                if(GuiCheckBox((Rectangle){400,240,40,40}, "DRAGON",&CreatCard_buffer.b_type[2]));
+                if(GuiCheckBox((Rectangle){525,240,40,40}, "PSYCHIC",&CreatCard_buffer.b_type[3]));
+
+                //CAIXA DE MUDANÇA DE INT E FLOAT
+
+                if(GuiCheckBox((Rectangle){400,390,40,40}, "TRUNFO",&CreatCard_buffer.b_trunfo));
+                if(GuiTextBox(  (Rectangle){525,390,125,40}, CreatCard_buffer.p_img, sizeof(CreatCard_buffer.p_img),
+                                img_box)){
+
+                    if(IsKeyPressed(KEY_ENTER)){
+
+                        img_box = false;
+
+                    }else img_box = true;
+                }
+
+                if(GuiButton((Rectangle){150,450,230,30}, "CONFIRM"));
+                if(GuiButton((Rectangle){420,450,210,30}, "VISUALIZER"));
+            }
+
             if(show_filters){
                 
                 //SHAPE
@@ -203,7 +272,7 @@ int main(){
                     GuiCheckBox((Rectangle){100,490,10,10},"ICE",&filters_deck.check_type[1]);
                     GuiCheckBox((Rectangle){100,510,10,10},"FIGHTING",&filters_deck.check_type[2]);
                     GuiCheckBox((Rectangle){100,530,10,10},"DRAGON",&filters_deck.check_type[3]);
-                    GuiCheckBox((Rectangle){100,550,10,10},"PYSICH",&filters_deck.check_type[4]);
+                    GuiCheckBox((Rectangle){100,550,10,10},"PSYCHIC",&filters_deck.check_type[4]);
                 }
 
                 // FILTRO POR STATUS    

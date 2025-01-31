@@ -17,7 +17,7 @@ typedef struct
     float altura;
     int habilidade;
     char img[30];
-} Cards; // ESTRUTURA PARA AS CARTAS
+}Cards; // ESTRUTURA PARA AS CARTAS
 
 typedef struct {
     Texture2D card_background;

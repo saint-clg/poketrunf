@@ -5,6 +5,17 @@
 
 #endif // STRUCT_CARDS_H
 
+typedef struct{
+    char b_name[20];
+    bool b_type[4];
+    bool b_trunfo;
+    int b_atk;
+    int b_hp;
+    float b_pso;
+    float b_alt;
+    int b_hab;
+    char p_img[30];
+}CreatMenu;
 
 void Strings(char a[], int b);
 
