@@ -198,7 +198,7 @@ static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, 
 
             if (wordWrap && (i == endLine))
             {
-                textOffsetY += (font.baseSize + font.baseSize/2)*scaleFactor;
+                textOffsetY += font.baseSize *scaleFactor;
                 textOffsetX = 0;
                 startLine = endLine;
                 endLine = -1;
@@ -224,7 +224,7 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
     
     for(int i =0; i < TOTAL_CARDS; i++){
 
-        CardTexture[i] = LoadRenderTexture(110,180); // renderiza uma nova textura
+        CardTexture[i] = LoadRenderTexture(220,360); // renderiza uma nova textura
         if (CardTexture[i].id == 0) {
             printf("Erro ao criar a render texture da carta!\n");
             return; // Retorna uma textura vazia em caso de erro
@@ -242,9 +242,9 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         //DrawRectangle(5,85,100,90,LIGHTGRAY); // status
         //DrawRectangle(5,130,100,45,GRAY); // habilidade
 
-        DrawTexture(background_cards.card_background, 5,20, WHITE); // fundo da carta
+        DrawTexture(background_cards.card_background, 11,41, WHITE); // fundo da carta
         
-        DrawTextureEx(poke_img[i], (Vector2){10,22}, 0.0f, 0.9f, WHITE); // pokemon
+        DrawTextureEx(poke_img[i], (Vector2){25,55}, 0.0f, 1.8f, WHITE); // pokemon
 
         if(card[i].trunfo == 1){
 
@@ -254,25 +254,25 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         char cardText[200];
         
         snprintf(cardText, sizeof(cardText), "%c %s #%d", card[i].tipo, card[i].nome, card[i].numero);
-        DrawTextEx(poke_font,cardText,(Vector2){6,5},11,0.2,BLACK);
-
-        snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
-        DrawTextEx(poke_font,cardText,(Vector2){8,115},15,0.2,BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){13,12},18,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "ATK: %d", card[i].ataque);
-        DrawTextEx(poke_font,cardText,(Vector2){8,130},12,0.2,BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){11,230},15,0.2,BLACK);
+
+        snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
+        DrawTextEx(poke_font,cardText,(Vector2){11,245},15,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "ALT: %.2f", card[i].altura);
-        DrawTextEx(poke_font,cardText,(Vector2){53,115},12,0.2,BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){120,230},15,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "PSO: %.2f", card[i].peso);
-        DrawTextEx(poke_font,cardText,(Vector2){53,130},12,0.2,BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){120,245},15,0.2,BLACK);
 
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
-        DrawTextEx(poke_font,cardText,(Vector2){8,140},12,0.2,BLACK);
+        DrawTextEx(poke_font,cardText,(Vector2){7,265},15,0.1,BLACK);
 
         snprintf(cardText, sizeof(cardText), "%s", hability[card[i].habilidade].text);
-        DrawTextBoxed(poke_font, cardText, (Rectangle){5,150,100,40}, 10, 0.1, true, BLACK);
+        DrawTextBoxed(poke_font, cardText, (Rectangle){7,280,205,80}, 14, 0, true, BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta

@@ -1,16 +1,16 @@
 nome,tipo,numero,trunfo,hp,ataque,peso,altura,habilidade,img
-Alola Ninetales,G,1,0,65,67,19.9,1.1,0,alola_ninetales.png
-Articuno,G,2,0,90,85,55.4,1.7,0,articuno.png
-Glalie,G,3,0,80,70,110.0,1.5,0,glalie.png
-Glaceon,G,4,0,65,60,25.9,0.8,0,glaceon.png
-Vaniluxe,G,5,0,71,95,57.5,1.1,0,vaniluxe.png
-Kyurem,G,6,1,125,130,220.0,2.6,0,kyurem.png
-Mr.Rime & Mr.Mime,G,7,0,80,85,58.0,1.5,0,mr_rime_mime.png
-Empoleon,G,8,0,85,86,84.5,1.7,0,empoleon.png
-Salamence,D,1,0,95,135,102.6,1.5,0,salamence.png
-Rayquaza,D,2,1,105,150,206.5,7.0,0,rayquaza.png
-Garchomp,D,3,0,108,130,95.0,1.9,0,garchomp.png
-Hydreigon,D,4,0,92,125,160.0,1.8,0,hydreigon.png
+Alola Ninetales,G,1,0,65,67,19.9,1.1,12,alola_ninetales.png
+Articuno,G,2,0,90,85,55.4,1.7,11,articuno.png
+Glalie,G,3,0,80,70,110.0,1.5,10,glalie.png
+Glaceon,G,4,0,65,60,25.9,0.8,9,glaceon.png
+Vaniluxe,G,5,0,71,95,57.5,1.1,8,vaniluxe.png
+Kyurem,G,6,1,125,130,220.0,2.6,7,kyurem.png
+Mr.Rime & Mr.Mime,G,7,0,80,85,58.0,1.5,6,mr_rime_mime.png
+Empoleon,G,8,0,85,86,84.5,1.7,5,empoleon.png
+Salamence,D,1,0,95,135,102.6,1.5,4,salamence.png
+Rayquaza,D,2,1,105,150,206.5,7.0,3,rayquaza.png
+Garchomp,D,3,0,108,130,95.0,1.9,2,garchomp.png
+Hydreigon,D,4,0,92,125,160.0,1.8,1,hydreigon.png
 Dragapult,D,5,0,88,120,50.0,2.0,0,dragapult.png
 Goodra,D,6,0,90,100,150.0,2.0,0,goodra.png
 Latios & Latias,D,7,0,80,130,40.0,1.8,0,latios_latias.png

@@ -43,7 +43,7 @@ void blizzard(){
 };
 
 Hability hability[TOTAL_HABILITIES] = {
-    {"DISABLE", "Desabilita temporariamente as habilidades e itens usados pelo inimigo, tornando-os incapazes de realizar ações durante um turno.", disable},
+    {"DISABLE", "Desabilita temporariamente as habilidades e itens usados pelo inimigo, tornando-os incapazes de realizar acoes durante um turno.", disable},
     {"SECRET_POWER", "Libera uma força secreta que causa um debuff aleatório ao inimigo, enfraquecendo suas habilidades ou atributos por um turno.", secret_power},
     {"ADAPTATIVE_TERRAIN", "Modifica o terreno de batalha para favorecer suas cartas, proporcionando um bônus estratégico que fortalece suas habilidades ou atributos.", adaptative_terrain},
     {"TEASURE_HUNT", "Ativa uma busca por itens na pilha, com a quantidade e qualidade dos itens encontrados variando conforme sua sorte.", teasure_hunt},
@@ -54,7 +54,7 @@ Hability hability[TOTAL_HABILITIES] = {
     {"DRAGONS_DANCE", "Efetua uma dança draconica ancestral, elevando seu ataque e pontos de vida, ganhando um poder impressionante.", dragons_dance},
     {"BULK_UP", "Aumenta significativamente a massa e o tamanho da carta, elevando seu peso e altura, quando um corpo impressionante.", bulk_up},
     {"FUTURE_SIGHT", "Vislumbra o futuro! Se vencer, rouba duas cartas do inimigo...\nSe perder, compra um item e altera o campo de batalha para uma vantagem inesperada...\n.", future_sight},
-    {"BLIZZARD", "Desencadeia uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos e enfraquecendo suas ações.", blizzard}
+    {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}
 };
 
 void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, 
@@ -116,7 +116,12 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
             Rectangle CardRect  = {posX, posY, cardWidth, cardHeight};
 
-            DrawTextureRec(TextureCards[i].texture, (Rectangle){0, 0, cardWidth, -cardHeight}, (Vector2){posX, posY}, WHITE);
+            DrawTexturePro(TextureCards[i].texture, 
+                (Rectangle){0, 0, 220, -360},  // Dimensões originais da textura
+                (Rectangle){posX, posY, cardWidth, cardHeight}, // Nova escala (110x180)
+                (Vector2){0, 0},  // Ponto de origem (não precisa mudar)
+                0.0f,  // Rotação
+                WHITE);
 
             if(CheckCollisionPointRec(GetMousePosition(),CardRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 
@@ -129,7 +134,7 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
     if(selectIndex != -1){
         Rectangle CardVizualizer = {10,10,280,390};
-        DrawTexturePro(TextureCards[selectIndex].texture, (Rectangle){0,0,cardWidth, - cardHeight}, 
+        DrawTexturePro(TextureCards[selectIndex].texture, (Rectangle){0,0,220,-360}, 
                         CardVizualizer,(Vector2){0,0}, 0.0f, WHITE);
 
     }

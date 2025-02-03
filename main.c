@@ -16,7 +16,7 @@ int main(){
 
     InitWindow(800, 600, "main");
     InitAudioDevice();
-//-------------------------------------------------------------------------------VARIAVEIS PARA DECK E GERENCIAMENTO
+//--------------------------------------------------------------------------- VARIAVEIS PARA DECK E GERENCIAMENTO
 
     Cards buffer;// ESTRUTURA BUFFER PARA GUARDAR INFORMAÇÕES CASO NESCESSARIO (TALVEZ NÃO PRECISE MAIS)
     FILE *arq_csv, *arq_dat;
@@ -54,11 +54,11 @@ int main(){
     printf("Criando deck...\n\n\n");
     fread(deck, sizeof(Cards), TOTAL_CARDS, arq_dat);// PREENCHE NOSSA ESTRUTURA DECK COM AS INFORMAÇÕES NO NOSSO .DAT
 
-//---------------------------------------------------------------------------------------VARIAVEIS PARA MENUS
+//--------------------------------------------------------------------------- VARIAVEIS PARA MENUS
     Texture2D pokemon_img[TOTAL_CARDS];
     Backgrounds_cards backgrounds_cards;
     InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS);
-    Font poke_font = LoadFont(".\\assets\\fonts\\GillSans Condensed.otf");
+    Font poke_font = LoadFont(".\\assets\\fonts\\Symtext.ttf");
     RenderTexture2D TextureCards[TOTAL_CARDS];
     CreatCards(deck,backgrounds_cards,pokemon_img,TextureCards,poke_font,TOTAL_CARDS);
 
@@ -71,7 +71,7 @@ int main(){
     Texture2D logo = LoadTexture(".\\assets\\img\\logo.png");
     Texture2D background_mainmenu = LoadTexture(".\\assets\\img\\background_mainmenu.png");
 
-//---------------------------------------------------------------------------------------------WHILE DO JOGO
+//--------------------------------------------------------------------------- WHILE DO JOGO
     
     while(!WindowShouldClose()){
         
@@ -127,6 +127,11 @@ int main(){
             }
             EndDrawing();
 
+        }
+        //--------------------------------------------------------------------------- PLAY
+        if(CurrentScreen == PLAY){
+
+            
         }
 
         //--------------------------------------------------------------------------- DECK MENU
