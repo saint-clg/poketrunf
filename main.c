@@ -23,6 +23,7 @@ int main()
 {
 
     InitWindow(800, 600, "main");
+    SetTargetFPS(60);
     InitAudioDevice();
     //--------------------------------------------------------------------------- VARIAVEIS PARA DECK E GERENCIAMENTO
 
@@ -77,13 +78,11 @@ int main()
         LoadTexture(".\\assets\\img\\battle\\battle_terrain_player1.png"),
         LoadTexture(".\\assets\\img\\battle\\battle_terrain_player2.png")};
     Texture2D battleTransition[16];
-
     char path_btransition[50];
-    for (int i = 0; i < 16; i++)
-    {
-        snprintf(path_btransition, sizeof(path_btransition), ".\\assets\\animations\\battle_transition\\%d.png", i);
-        battleTransition[i] = LoadTexture(path_btransition);
-    } // for
+    for (int i = 0; i < 16; i++){
+    snprintf(path_btransition, sizeof(path_btransition),".\\assets\\animations\\battle_transition\\%d.png", i);
+    battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
+    }
 
     GameScreen CurrentScreen = MAIN_MENU;
     int walk_menu = 0, screenWidth = GetScreenWidth();
@@ -163,10 +162,12 @@ int main()
         }
         //--------------------------------------------------------------------------- PLAY
         if (CurrentScreen == PLAY)
-        {
-            BeginDrawing;
+        {   
+            BeginDrawing();
+            
+            ClearBackground(WHITE);
             battleAnimation(battleHUD, battleTransition);
-            EndDrawing;
+            EndDrawing();
         }
 
         //--------------------------------------------------------------------------- DECK MENU
