@@ -85,7 +85,9 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
     }
 }
 
-static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint, Color selectBackTint)
+static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing, 
+                                    bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint,
+                                    Color selectBackTint)
 {
     int length = TextLength(text);  // Total length in bytes of the text, scanned by codepoints in loop
 

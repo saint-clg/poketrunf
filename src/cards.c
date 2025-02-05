@@ -139,3 +139,74 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
     }
 }
+
+void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer){
+
+    Rectangle background_card = {0,0,220,360};
+    Rectangle background_viz_card = {150, 140, 230, 300};
+    Rectangle background_pokemon = {0,0,198,178};
+    Rectangle  background_viz_pokemon = {165,175,198,178};
+
+    char card_title[30];
+    char poke_img_path[30];
+    const char stats_text[30];
+
+    if(card_info.b_type[0]){
+        
+        DrawTexturePro(backgrounds_cards.ice_background, background_card, background_viz_card, (Vector2){0,0},
+                                0, WHITE);
+        snprintf(card_title, sizeof(card_title), "G %s", card_info.b_name);
+    }
+    if(card_info.b_type[1]){
+        
+        DrawTexturePro(backgrounds_cards.fighting_background, background_card, background_viz_card, (Vector2){0,0},
+                                0, WHITE);
+        snprintf(card_title, sizeof(card_title), "L %s", card_info.b_name);
+    }
+    if(card_info.b_type[3]){
+        
+        DrawTexturePro(backgrounds_cards.dragon_background, background_card, background_viz_card, (Vector2){0,0},
+                                0, WHITE);
+        snprintf(card_title, sizeof(card_title), "D %s", card_info.b_name);
+    }
+    if(card_info.b_type[4]){
+        
+        DrawTexturePro(backgrounds_cards.pisych_background, background_card, background_viz_card, (Vector2){0,0},
+                                0, WHITE);
+        snprintf(card_title, sizeof(card_title), "P %s", card_info.b_name);
+    }
+
+    DrawTexturePro( backgrounds_cards.card_background, background_pokemon, background_viz_pokemon, (Vector2){0,0},
+                    0, WHITE);
+    
+    snprintf(poke_img_path, sizeof(poke_img_path), ".\\assets\\cards\\img\\%s.png", card_info.p_img);
+    poke_img_buffer = LoadTexture(poke_img_path);
+    if(poke_img_buffer.id == 0){
+        poke_img_buffer = LoadTexture(".\\assets\\cards\\img\\none.png");
+    }
+    DrawTexturePro( poke_img_buffer, (Rectangle){0,0,96,96}, (Rectangle){184,190,98,98}, (Vector2){0,0},
+                    0,WHITE);
+
+    if(card_info.b_trunfo){
+        DrawTexturePro( backgrounds_cards.super_trunfo_boards, background_card, background_viz_card, (Vector2){0,0},
+                        0,WHITE);
+    }else DrawTexturePro( backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0,0},0,WHITE);
+
+    snprintf(stats_text, sizeof(stats_text), "ATK: %d", (int)card_info.b_atk);
+    DrawText(stats_text, 170, 325, 15, BLACK);
+     
+    snprintf(stats_text, sizeof(stats_text), "HP: %d", (int)card_info.b_hp);
+    DrawText(stats_text, 170, 340, 15, BLACK);
+    
+    snprintf(stats_text, sizeof(stats_text), "ALT: %f", card_info.b_alt);
+    DrawText(stats_text, 270, 325, 15, BLACK);
+
+    snprintf(stats_text, sizeof(stats_text), "PSO: %f", card_info.b_pso);
+    DrawText(stats_text, 270, 340, 15, BLACK);
+
+    snprintf(stats_text, sizeof(stats_text), "HAB: %s", hability[card_info.b_hab].nome);
+    DrawText(stats_text, 155,365,15,BLACK);
+
+    DrawText(hability[card_info.b_hab].text, 155,370,12,BLACK);
+
+}

@@ -5,18 +5,6 @@
 
 #endif // STRUCT_CARDS_H
 
-typedef struct{
-    char b_name[20];
-    bool b_type[4];
-    bool b_trunfo;
-    float b_atk;
-    float b_hp;
-    float b_pso;
-    float b_alt;
-    int b_hab;
-    char p_img[30];
-}CreatMenu;
-
 void Strings(char a[], int b);
 
 void SaveBin(FILE *arq_csv, FILE *arq_dat, Cards *buffer);

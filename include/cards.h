@@ -64,6 +64,18 @@ typedef struct {
 }Hability;// HABILIDADES
 
 typedef struct{
+    char b_name[20];
+    bool b_type[4];
+    bool b_trunfo;
+    float b_atk;
+    float b_hp;
+    float b_pso;
+    float b_alt;
+    int b_hab;
+    char p_img[30];
+}CreatMenu;
+
+typedef struct{
     //TYPES FILTER
     bool check_type[5]; // 0=activate 1=ICE 2=
     bool check_stats[5];
@@ -81,5 +93,7 @@ extern float scrollOffset;
 //FUNCTIONS -----------------------------------------------------------------------------------------------------
 
 void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, Font poke_font);
+
+void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer);
 
 #endif // CARDS_H

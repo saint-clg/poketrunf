@@ -272,6 +272,7 @@ int main()
 
             if (addNewCard_menu)
             {
+                Texture2D poke_img_buffer;
 
                 static bool name_box = false;
                 static bool img_box = false;
@@ -296,7 +297,7 @@ int main()
                         name_box = true;
                 }
 
-                DrawRectangle(150, 140, 230, 300, BLACK);
+                DrawRectangle(130, 125, 220, 360, BLACK);
                 // LIGAR 1 DESLIGA OS OUTROS
                 if (GuiCheckBox((Rectangle){400, 190, 40, 40}, "ICE", &CreatCard_buffer.b_type[0]))
                 {
@@ -363,13 +364,16 @@ int main()
                         img_box = true;
                 }
 
-                if (GuiButton((Rectangle){150, 450, 230, 30}, "CONFIRM"))
-                    ;
+                if (GuiButton((Rectangle){150, 450, 230, 30}, "CONFIRM")){
+                    
+                }
                 if (GuiButton((Rectangle){420, 450, 210, 30}, "VISUALIZER"))
                 {
 
-                    memset(&buffer, 0, sizeof(Cards));
+                    
                 }
+
+                vizualizer(CreatCard_buffer, backgrounds_cards, poke_img_buffer);
             }
 
             if (show_filters)
