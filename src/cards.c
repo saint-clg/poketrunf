@@ -4,6 +4,7 @@
 #include <string.h>
 #include "raylib.h"
 #include "cards.h"
+#include "struct_card.h"
 
 void disable()
 {
@@ -171,7 +172,7 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
     }
 }
 
-void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer, Font poke_font)
+void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer, Font poke_font)
 {
 
     Rectangle background_card = {0, 0, 220, 360};
@@ -231,20 +232,22 @@ void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Textur
     else
         DrawTexturePro(backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0, 0}, 0, WHITE);
 
+    DrawTextEx(poke_font, card_title, (Vector2){153, 137}, 18, 0.2, BLACK);
+
     snprintf(stats_text, sizeof(stats_text), "ATK: %d", (int)card_info.b_atk);
     DrawTextEx(poke_font, stats_text, (Vector2){151, 357}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "HP: %d", (int)card_info.b_hp);
-    DrawTextEx(poke_font, cardText, (Vector2){151, 372}, 15, 0.2, BLACK);
+    DrawTextEx(poke_font, stats_text, (Vector2){151, 372}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "ALT: %f", card_info.b_alt);
-    DrawTextEx(poke_font, cardText, (Vector2){260, 357}, 15, 0.2, BLACK);
+    DrawTextEx(poke_font, stats_text, (Vector2){260, 357}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "PSO: %f", card_info.b_pso);
-    DrawTextEx(poke_font, cardText, (Vector2){260, 372}, 15, 0.2, BLACK);
+    DrawTextEx(poke_font, stats_text, (Vector2){260, 372}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "HAB: %s", hability[card_info.b_hab].nome);
-    DrawTextEx(poke_font, cardText, (Vector2){147, 392}, 15, 0.2, BLACK);
+    DrawTextEx(poke_font, stats_text, (Vector2){147, 392}, 15, 0.2, BLACK);
 
-    DrawText(hability[card_info.b_hab].text, 155, 370, 12, BLACK);
+    //DrawTextBoxed(poke_font, hability[card_info.b_hab].text, (Rectangle){147, 405, 205, 80}, 14, 0, true, BLACK);
 }

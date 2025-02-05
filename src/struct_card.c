@@ -297,7 +297,7 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
         DrawTextEx(poke_font, cardText, (Vector2){7, 265}, 15, 0.1, BLACK);
 
-        DrawTextBoxed(poke_font, cardText, (Rectangle){147, 405, 205, 80}, 14, 0, true, BLACK);
+        DrawTextBoxed(poke_font, cardText, (Rectangle){7, 280, 205, 80}, 14, 0, true, BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta

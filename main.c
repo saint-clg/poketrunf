@@ -372,7 +372,7 @@ int main()
                 {
                 }
 
-                vizualizer(CreatCard_buffer, backgrounds_cards, poke_img_buffer);
+                Vizualizer(CreatCard_buffer, backgrounds_cards, poke_img_buffer, poke_font);
             }
 
             if (show_filters)
