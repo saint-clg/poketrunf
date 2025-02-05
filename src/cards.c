@@ -5,40 +5,52 @@
 #include "raylib.h"
 #include "cards.h"
 
-void disable(){
+void disable()
+{
     printf("magia!");
 };
-void secret_power(){
+void secret_power()
+{
     printf("magia!");
 };
-void adaptative_terrain(){
+void adaptative_terrain()
+{
     printf("magia!");
 };
-void teasure_hunt(){
+void teasure_hunt()
+{
     printf("magia!");
 };
-void swords_dance(){
+void swords_dance()
+{
     printf("magia!");
 };
-void heal_pulse(){
+void heal_pulse()
+{
     printf("magia!");
 };
-void heavy_slam(){
+void heavy_slam()
+{
     printf("magia!");
 };
-void levitate(){
+void levitate()
+{
     printf("magia!");
 };
-void dragons_dance(){
+void dragons_dance()
+{
     printf("magia!");
 };
-void bulk_up(){
+void bulk_up()
+{
     printf("magia!");
 };
-void future_sight(){
+void future_sight()
+{
     printf("magia!");
 };
-void blizzard(){
+void blizzard()
+{
     printf("magia!");
 };
 
@@ -54,17 +66,17 @@ Hability hability[TOTAL_HABILITIES] = {
     {"DRAGONS_DANCE", "Efetua uma dança draconica ancestral, elevando seu ataque e pontos de vida, ganhando um poder impressionante.", dragons_dance},
     {"BULK_UP", "Aumenta significativamente a massa e o tamanho da carta, elevando seu peso e altura, quando um corpo impressionante.", bulk_up},
     {"FUTURE_SIGHT", "Vislumbra o futuro! Se vencer, rouba duas cartas do inimigo...\nSe perder, compra um item e altera o campo de batalha para uma vantagem inesperada...\n.", future_sight},
-    {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}
-};
+    {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}};
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, 
-                    Font poke_font){
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards,
+                    Font poke_font)
+{
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
     int cardHeight = 180;
-    int padding = 10;  // Espaço entre as cartas
-    int startX = 310;   // Posição inicial X
-    int startY = 20 + scrollOffset;   // Posição inicial Y
+    int padding = 10;               // Espaço entre as cartas
+    int startX = 310;               // Posição inicial X
+    int startY = 20 + scrollOffset; // Posição inicial Y
 
     static int selectIndex = -1;
 
@@ -72,59 +84,78 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
     // Inicia a renderização
 
-    for (int i = 0, s = 0; i < total_cards; i++) {
+    for (int i = 0, s = 0; i < total_cards; i++)
+    {
 
         filter = true;
 
         // Lógica de filtros
 
-        if(activate_filters.check_search){
-        
-            if(strcasecmp(activate_filters.search_name, card[i].nome)) filter = false;
+        if (activate_filters.check_search)
+        {
+
+            if (strcasecmp(activate_filters.search_name, card[i].nome))
+                filter = false;
         }
 
-        if (activate_filters.check_type[0]) {
-            if (activate_filters.check_type[1] && card[i].tipo != 'G') filter = false;
-            if (activate_filters.check_type[2] && card[i].tipo != 'L') filter = false;
-            if (activate_filters.check_type[3] && card[i].tipo != 'D') filter = false;
-            if (activate_filters.check_type[4] && card[i].tipo != 'P') filter = false;
+        if (activate_filters.check_type[0])
+        {
+            if (activate_filters.check_type[1] && card[i].tipo != 'G')
+                filter = false;
+            if (activate_filters.check_type[2] && card[i].tipo != 'L')
+                filter = false;
+            if (activate_filters.check_type[3] && card[i].tipo != 'D')
+                filter = false;
+            if (activate_filters.check_type[4] && card[i].tipo != 'P')
+                filter = false;
         }
 
-        if (activate_filters.check_stats[0]) {
-            if (activate_filters.check_stats[1]) {
-                if (card[i].hp < activate_filters.min_filter || card[i].hp > activate_filters.max_filter) filter = false;
+        if (activate_filters.check_stats[0])
+        {
+            if (activate_filters.check_stats[1])
+            {
+                if (card[i].hp < activate_filters.min_filter || card[i].hp > activate_filters.max_filter)
+                    filter = false;
             }
-            if (activate_filters.check_stats[2]) {
-                if (card[i].ataque < activate_filters.min_filter || card[i].ataque > activate_filters.max_filter) filter = false;
+            if (activate_filters.check_stats[2])
+            {
+                if (card[i].ataque < activate_filters.min_filter || card[i].ataque > activate_filters.max_filter)
+                    filter = false;
             }
-            if (activate_filters.check_stats[3]) {
-                if (card[i].altura < activate_filters.min_filter || card[i].altura > activate_filters.max_filter) filter = false;
+            if (activate_filters.check_stats[3])
+            {
+                if (card[i].altura < activate_filters.min_filter || card[i].altura > activate_filters.max_filter)
+                    filter = false;
             }
-            if (activate_filters.check_stats[4]) {
-                if (card[i].peso < activate_filters.min_filter || card[i].peso >  activate_filters.max_filter) filter = false;
+            if (activate_filters.check_stats[4])
+            {
+                if (card[i].peso < activate_filters.min_filter || card[i].peso > activate_filters.max_filter)
+                    filter = false;
             }
         }
 
-        if (filter) {
+        if (filter)
+        {
             // Cálculo da posição de cada carta (linha e coluna)
-            int row = s / 4;  // Determina em qual linha a carta ficará
-            int col = s % 4;  // Determina em qual coluna a carta ficará
+            int row = s / 4; // Determina em qual linha a carta ficará
+            int col = s % 4; // Determina em qual coluna a carta ficará
 
             // Posição X e Y da carta
             int posX = startX + (cardWidth + padding) * col;
             int posY = startY + (cardHeight + padding) * row;
 
-            Rectangle CardRect  = {posX, posY, cardWidth, cardHeight};
+            Rectangle CardRect = {posX, posY, cardWidth, cardHeight};
 
-            DrawTexturePro(TextureCards[i].texture, 
-                (Rectangle){0, 0, 220, -360},  // Dimensões originais da textura
-                (Rectangle){posX, posY, cardWidth, cardHeight}, // Nova escala (110x180)
-                (Vector2){0, 0},  // Ponto de origem (não precisa mudar)
-                0.0f,  // Rotação
-                WHITE);
+            DrawTexturePro(TextureCards[i].texture,
+                           (Rectangle){0, 0, 220, -360},                   // Dimensões originais da textura
+                           (Rectangle){posX, posY, cardWidth, cardHeight}, // Nova escala (110x180)
+                           (Vector2){0, 0},                                // Ponto de origem (não precisa mudar)
+                           0.0f,                                           // Rotação
+                           WHITE);
 
-            if(CheckCollisionPointRec(GetMousePosition(),CardRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                
+            if (CheckCollisionPointRec(GetMousePosition(), CardRect) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+
                 selectIndex = i;
             }
 
@@ -132,81 +163,88 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
         }
     }
 
-    if(selectIndex != -1){
-        Rectangle CardVizualizer = {10,10,280,390};
-        DrawTexturePro(TextureCards[selectIndex].texture, (Rectangle){0,0,220,-360}, 
-                        CardVizualizer,(Vector2){0,0}, 0.0f, WHITE);
-
+    if (selectIndex != -1)
+    {
+        Rectangle CardVizualizer = {10, 10, 280, 390};
+        DrawTexturePro(TextureCards[selectIndex].texture, (Rectangle){0, 0, 220, -360},
+                       CardVizualizer, (Vector2){0, 0}, 0.0f, WHITE);
     }
 }
 
-void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer){
+void vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer, Font poke_font)
+{
 
-    Rectangle background_card = {0,0,220,360};
-    Rectangle background_viz_card = {150, 140, 230, 300};
-    Rectangle background_pokemon = {0,0,198,178};
-    Rectangle  background_viz_pokemon = {165,175,198,178};
+    Rectangle background_card = {0, 0, 220, 360};
+    Rectangle background_viz_card = {140, 125, 220, 360};
+    Rectangle background_pokemon = {0, 0, 198, 178};
+    Rectangle background_viz_pokemon = {165, 175, 198, 178};
 
     char card_title[30];
     char poke_img_path[30];
     const char stats_text[30];
 
-    if(card_info.b_type[0]){
-        
-        DrawTexturePro(backgrounds_cards.ice_background, background_card, background_viz_card, (Vector2){0,0},
-                                0, WHITE);
+    if (card_info.b_type[0])
+    {
+
+        DrawTexturePro(backgrounds_cards.ice_background, background_card, background_viz_card, (Vector2){0, 0},
+                       0, WHITE);
         snprintf(card_title, sizeof(card_title), "G %s", card_info.b_name);
     }
-    if(card_info.b_type[1]){
-        
-        DrawTexturePro(backgrounds_cards.fighting_background, background_card, background_viz_card, (Vector2){0,0},
-                                0, WHITE);
+    if (card_info.b_type[1])
+    {
+
+        DrawTexturePro(backgrounds_cards.fighting_background, background_card, background_viz_card, (Vector2){0, 0},
+                       0, WHITE);
         snprintf(card_title, sizeof(card_title), "L %s", card_info.b_name);
     }
-    if(card_info.b_type[3]){
-        
-        DrawTexturePro(backgrounds_cards.dragon_background, background_card, background_viz_card, (Vector2){0,0},
-                                0, WHITE);
+    if (card_info.b_type[3])
+    {
+
+        DrawTexturePro(backgrounds_cards.dragon_background, background_card, background_viz_card, (Vector2){0, 0},
+                       0, WHITE);
         snprintf(card_title, sizeof(card_title), "D %s", card_info.b_name);
     }
-    if(card_info.b_type[4]){
-        
-        DrawTexturePro(backgrounds_cards.pisych_background, background_card, background_viz_card, (Vector2){0,0},
-                                0, WHITE);
+    if (card_info.b_type[4])
+    {
+
+        DrawTexturePro(backgrounds_cards.pisych_background, background_card, background_viz_card, (Vector2){0, 0},
+                       0, WHITE);
         snprintf(card_title, sizeof(card_title), "P %s", card_info.b_name);
     }
 
-    DrawTexturePro( backgrounds_cards.card_background, background_pokemon, background_viz_pokemon, (Vector2){0,0},
-                    0, WHITE);
-    
+    DrawTexturePro(backgrounds_cards.card_background, background_pokemon, background_viz_pokemon, (Vector2){0, 0},
+                   0, WHITE);
+
     snprintf(poke_img_path, sizeof(poke_img_path), ".\\assets\\cards\\img\\%s.png", card_info.p_img);
     poke_img_buffer = LoadTexture(poke_img_path);
-    if(poke_img_buffer.id == 0){
+    if (poke_img_buffer.id == 0)
+    {
         poke_img_buffer = LoadTexture(".\\assets\\cards\\img\\none.png");
     }
-    DrawTexturePro( poke_img_buffer, (Rectangle){0,0,96,96}, (Rectangle){184,190,98,98}, (Vector2){0,0},
-                    0,WHITE);
+    DrawTextureEx(poke_img_buffer, (Vector2){165, 182}, 0, 1.8f, WHITE);
 
-    if(card_info.b_trunfo){
-        DrawTexturePro( backgrounds_cards.super_trunfo_boards, background_card, background_viz_card, (Vector2){0,0},
-                        0,WHITE);
-    }else DrawTexturePro( backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0,0},0,WHITE);
+    if (card_info.b_trunfo)
+    {
+        DrawTexturePro(backgrounds_cards.super_trunfo_boards, background_card, background_viz_card, (Vector2){0, 0},
+                       0, WHITE);
+    }
+    else
+        DrawTexturePro(backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0, 0}, 0, WHITE);
 
     snprintf(stats_text, sizeof(stats_text), "ATK: %d", (int)card_info.b_atk);
-    DrawText(stats_text, 170, 325, 15, BLACK);
-     
+    DrawTextEx(poke_font, stats_text, (Vector2){151, 357}, 15, 0.2, BLACK);
+
     snprintf(stats_text, sizeof(stats_text), "HP: %d", (int)card_info.b_hp);
-    DrawText(stats_text, 170, 340, 15, BLACK);
-    
+    DrawTextEx(poke_font, cardText, (Vector2){151, 372}, 15, 0.2, BLACK);
+
     snprintf(stats_text, sizeof(stats_text), "ALT: %f", card_info.b_alt);
-    DrawText(stats_text, 270, 325, 15, BLACK);
+    DrawTextEx(poke_font, cardText, (Vector2){260, 357}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "PSO: %f", card_info.b_pso);
-    DrawText(stats_text, 270, 340, 15, BLACK);
+    DrawTextEx(poke_font, cardText, (Vector2){260, 372}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "HAB: %s", hability[card_info.b_hab].nome);
-    DrawText(stats_text, 155,365,15,BLACK);
+    DrawTextEx(poke_font, cardText, (Vector2){147, 392}, 15, 0.2, BLACK);
 
-    DrawText(hability[card_info.b_hab].text, 155,370,12,BLACK);
-
+    DrawText(hability[card_info.b_hab].text, 155, 370, 12, BLACK);
 }

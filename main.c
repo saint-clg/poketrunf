@@ -79,9 +79,10 @@ int main()
         LoadTexture(".\\assets\\img\\battle\\battle_terrain_player2.png")};
     Texture2D battleTransition[16];
     char path_btransition[50];
-    for (int i = 0; i < 16; i++){
-    snprintf(path_btransition, sizeof(path_btransition),".\\assets\\animations\\battle_transition\\%d.png", i);
-    battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
+    for (int i = 0; i < 16; i++)
+    {
+        snprintf(path_btransition, sizeof(path_btransition), ".\\assets\\animations\\battle_transition\\%d.png", i);
+        battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
     }
 
     GameScreen CurrentScreen = MAIN_MENU;
@@ -162,9 +163,9 @@ int main()
         }
         //--------------------------------------------------------------------------- PLAY
         if (CurrentScreen == PLAY)
-        {   
+        {
             BeginDrawing();
-            
+
             ClearBackground(WHITE);
             battleAnimation(battleHUD, battleTransition);
             EndDrawing();
@@ -284,7 +285,7 @@ int main()
 
                 DrawRectangle(130, 120, 540, 370, DARKGRAY);
 
-                if (GuiTextBox((Rectangle){400, 140, 250, 40}, CreatCard_buffer.b_name, sizeof(CreatCard_buffer.b_name),
+                if (GuiTextBox((Rectangle){400, 140, 260, 40}, CreatCard_buffer.b_name, sizeof(CreatCard_buffer.b_name),
                                name_box))
                 {
 
@@ -299,59 +300,59 @@ int main()
 
                 DrawRectangle(130, 125, 220, 360, BLACK);
                 // LIGAR 1 DESLIGA OS OUTROS
-                if (GuiCheckBox((Rectangle){400, 190, 40, 40}, "ICE", &CreatCard_buffer.b_type[0]))
+                if (GuiCheckBox((Rectangle){400, 190, 50, 40}, "ICE", &CreatCard_buffer.b_type[0]))
                 {
                     CreatCard_buffer.b_type[1] = false;
                     CreatCard_buffer.b_type[2] = false;
                     CreatCard_buffer.b_type[3] = false;
                 }
-                if (GuiCheckBox((Rectangle){525, 190, 40, 40}, "FIGHTING", &CreatCard_buffer.b_type[1]))
+                if (GuiCheckBox((Rectangle){525, 190, 50, 40}, "FIGHTING", &CreatCard_buffer.b_type[1]))
                 {
                     CreatCard_buffer.b_type[0] = false;
                     CreatCard_buffer.b_type[2] = false;
                     CreatCard_buffer.b_type[3] = false;
                 }
-                if (GuiCheckBox((Rectangle){400, 240, 40, 40}, "DRAGON", &CreatCard_buffer.b_type[2]))
+                if (GuiCheckBox((Rectangle){400, 240, 50, 40}, "DRAGON", &CreatCard_buffer.b_type[2]))
                 {
                     CreatCard_buffer.b_type[0] = false;
                     CreatCard_buffer.b_type[1] = false;
                     CreatCard_buffer.b_type[3] = false;
                 }
-                if (GuiCheckBox((Rectangle){525, 240, 40, 40}, "PSYCHIC", &CreatCard_buffer.b_type[3]))
+                if (GuiCheckBox((Rectangle){525, 240, 50, 40}, "PSYCHIC", &CreatCard_buffer.b_type[3]))
                 {
                     CreatCard_buffer.b_type[0] = false;
                     CreatCard_buffer.b_type[1] = false;
                     CreatCard_buffer.b_type[2] = false;
                 }
 
-                GuiSliderBar((Rectangle){400, 290, 70, 40}, "MIN", "MAX", &CreatCard_buffer.b_atk, 0, 150);
+                GuiSliderBar((Rectangle){400, 290, 80, 40}, "MIN", "MAX", &CreatCard_buffer.b_atk, 0, 150);
                 snprintf(stats_text[0], 5, "%.2f", CreatCard_buffer.b_atk);
-                if (GuiTextBox((Rectangle){400, 290, 70, 40}, stats_text[0], sizeof(stats_text[0]), edit_stats_bar[0]))
+                if (GuiTextBox((Rectangle){400, 290, 80, 40}, stats_text[0], sizeof(stats_text[0]), edit_stats_bar[0]))
                 {
                     edit_stats_bar[0] = !edit_stats_bar[0];
                 }
-                GuiSliderBar((Rectangle){400, 340, 70, 40}, "MIN", "MAX", &CreatCard_buffer.b_hp, 0, 150);
+                GuiSliderBar((Rectangle){400, 340, 80, 40}, "MIN", "MAX", &CreatCard_buffer.b_hp, 0, 150);
                 snprintf(stats_text[1], 5, "%.2f", CreatCard_buffer.b_hp);
-                if (GuiTextBox((Rectangle){400, 340, 70, 40}, stats_text[1], sizeof(stats_text[1]), edit_stats_bar[1]))
+                if (GuiTextBox((Rectangle){400, 340, 80, 40}, stats_text[1], sizeof(stats_text[1]), edit_stats_bar[1]))
                 {
                     edit_stats_bar[1] = !edit_stats_bar[1];
                 }
-                GuiSliderBar((Rectangle){525, 290, 70, 40}, "MIN", "MAX", &CreatCard_buffer.b_alt, 0, 150);
+                GuiSliderBar((Rectangle){525, 290, 80, 40}, "MIN", "MAX", &CreatCard_buffer.b_alt, 0, 150);
                 snprintf(stats_text[2], 5, "%.2f", CreatCard_buffer.b_alt);
                 if (GuiTextBox((Rectangle){525, 290, 70, 40}, stats_text[2], sizeof(stats_text[2]), edit_stats_bar[2]))
                 {
                     edit_stats_bar[2] = !edit_stats_bar[2];
                 }
-                GuiSliderBar((Rectangle){525, 340, 70, 40}, "MIN", "MAX", &CreatCard_buffer.b_pso, 0, 150);
+                GuiSliderBar((Rectangle){525, 340, 80, 40}, "MIN", "MAX", &CreatCard_buffer.b_pso, 0, 150);
                 snprintf(stats_text[3], 5, "%.2f", CreatCard_buffer.b_pso);
-                if (GuiTextBox((Rectangle){525, 340, 70, 40}, stats_text[3], sizeof(stats_text[3]), edit_stats_bar[3]))
+                if (GuiTextBox((Rectangle){525, 340, 80, 40}, stats_text[3], sizeof(stats_text[3]), edit_stats_bar[3]))
                 {
                     edit_stats_bar[3] = !edit_stats_bar[3];
                 }
 
-                if (GuiCheckBox((Rectangle){400, 390, 40, 40}, "TRUNFO", &CreatCard_buffer.b_trunfo))
+                if (GuiCheckBox((Rectangle){400, 390, 50, 40}, "TRUNFO", &CreatCard_buffer.b_trunfo))
                     ;
-                if (GuiTextBox((Rectangle){525, 390, 125, 40}, CreatCard_buffer.p_img, sizeof(CreatCard_buffer.p_img),
+                if (GuiTextBox((Rectangle){525, 390, 135, 40}, CreatCard_buffer.p_img, sizeof(CreatCard_buffer.p_img),
                                img_box))
                 {
 
@@ -364,13 +365,11 @@ int main()
                         img_box = true;
                 }
 
-                if (GuiButton((Rectangle){150, 450, 230, 30}, "CONFIRM")){
-                    
-                }
-                if (GuiButton((Rectangle){420, 450, 210, 30}, "VISUALIZER"))
+                if (GuiButton((Rectangle){140, 495, 220, 30}, "CONFIRM"))
                 {
-
-                    
+                }
+                if (GuiButton((Rectangle){400, 440, 260, 30}, "VISUALIZER"))
+                {
                 }
 
                 vizualizer(CreatCard_buffer, backgrounds_cards, poke_img_buffer);
