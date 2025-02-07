@@ -69,8 +69,7 @@ Hability hability[TOTAL_HABILITIES] = {
     {"FUTURE_SIGHT", "Vislumbra o futuro! Se vencer, rouba duas cartas do inimigo...\nSe perder, compra um item e altera o campo de batalha para uma vantagem inesperada...\n.", future_sight},
     {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}};
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards,
-                    Font poke_font)
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards)
 {
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
