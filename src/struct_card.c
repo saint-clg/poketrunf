@@ -58,7 +58,7 @@ int CountLines(FILE *arq_dat)
     return lines;
 } // conta quantas linhas tem no arquivo csv (quantidade de cartas)
 
-void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *pokemon_img, int totalCards)
+void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *pokemon_img, int totalCards, Font *poke_font, Texture2D battleHUD[], Texture2D battleTransition[], Font *font_mainmenu, Sound *walk_menuSound, Sound *enter_menuSound, Texture2D *logo, Texture2D *background_mainmenu)
 {
     // Carregar a textura de fundo da carta
     backgrounds_cards->card_background = LoadTexture(".\\assets\\cards\\img\\card_background.png");
@@ -86,6 +86,32 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
             printf("Erro ao carregar a imagem do Pokémon %s!\n", card[i].img);
         }
     }
+
+    *poke_font = LoadFont(".\\assets\\fonts\\Symtext.ttf");
+
+    
+    battleHUD[0] = LoadTexture(".\\assets\\img\\battle\\battle_hud.png");
+    battleHUD[1] = LoadTexture(".\\assets\\img\\battle\\battle_player1.png");
+    battleHUD[2] = LoadTexture(".\\assets\\img\\battle\\battle_player2.png");
+    battleHUD[3] = LoadTexture(".\\assets\\img\\battle\\battle_terrain_player1.png");
+    battleHUD[4] = LoadTexture(".\\assets\\img\\battle\\battle_terrain_player2.png");
+
+    char path_btransition[50];
+    for (int i = 0; i < 16; i++)
+    {
+        snprintf(path_btransition, sizeof(path_btransition), ".\\assets\\animations\\battle_transition\\%d.png", i);
+        battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
+    }
+
+    
+    *font_mainmenu = LoadFont(".\\assets\\fonts\\Minecraft.ttf");
+    *walk_menuSound = LoadSound(".\\assets\\sounds\\move_menu.wav");
+    *enter_menuSound = LoadSound(".\\assets\\sounds\\enter_menu.wav");
+    *logo = LoadTexture(".\\assets\\img\\logo.png");
+    *background_mainmenu = LoadTexture(".\\assets\\img\\background_mainmenu.png");
+
+    return;
+
 }
 
 void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing,
