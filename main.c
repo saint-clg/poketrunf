@@ -66,33 +66,24 @@ int main()
     //--------------------------------------------------------------------------- VARIAVEIS PARA MENUS
     Texture2D pokemon_img[TOTAL_CARDS];
     Backgrounds_cards backgrounds_cards;
-    InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS);
-    Font poke_font = LoadFont(".\\assets\\fonts\\Symtext.ttf");
+    Font poke_font;
+    Texture2D battleHUD[5];
+    Texture2D battleTransition[16];
+    Font font_mainmenu;
+    Sound walk_menuSound;
+    Sound enter_menuSound;
+    Texture2D logo;
+    Texture2D background_mainmenu;
+
+    InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS, &poke_font, battleHUD, battleTransition, &font_mainmenu, &walk_menuSound, &enter_menuSound, &logo, &background_mainmenu);
+
     RenderTexture2D TextureCards[TOTAL_CARDS];
     CreatCards(deck, backgrounds_cards, pokemon_img, TextureCards, poke_font, TOTAL_CARDS);
 
-    Texture2D battleHUD[5] = {
-        LoadTexture(".\\assets\\img\\battle\\battle_hud.png"),
-        LoadTexture(".\\assets\\img\\battle\\battle_player1.png"),
-        LoadTexture(".\\assets\\img\\battle\\battle_player2.png"),
-        LoadTexture(".\\assets\\img\\battle\\battle_terrain_player1.png"),
-        LoadTexture(".\\assets\\img\\battle\\battle_terrain_player2.png")};
-    Texture2D battleTransition[16];
-    char path_btransition[50];
-    for (int i = 0; i < 16; i++)
-    {
-        snprintf(path_btransition, sizeof(path_btransition), ".\\assets\\animations\\battle_transition\\%d.png", i);
-        battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
-    }
-
     GameScreen CurrentScreen = MAIN_MENU;
+
     int walk_menu = 0, screenWidth = GetScreenWidth();
     const char *menu_options[] = {"Play", "Deck", "Options", "Exit"};
-    Font font_mainmenu = LoadFont(".\\assets\\fonts\\Minecraft.ttf");
-    Sound walk_menuSound = LoadSound(".\\assets\\sounds\\move_menu.wav");
-    Sound enter_menuSound = LoadSound(".\\assets\\sounds\\enter_menu.wav");
-    Texture2D logo = LoadTexture(".\\assets\\img\\logo.png");
-    Texture2D background_mainmenu = LoadTexture(".\\assets\\img\\background_mainmenu.png");
 
     //--------------------------------------------------------------------------- WHILE DO JOGO
 
