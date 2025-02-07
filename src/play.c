@@ -56,3 +56,8 @@ void battleAnimation(Texture2D battleHUD[5], Texture2D battleTransition[16])
                        (Rectangle){0, 0, 800, 600}, (Vector2){0, 0}, 0, WHITE);
     }
 }
+
+void battleHud(){
+
+
+};

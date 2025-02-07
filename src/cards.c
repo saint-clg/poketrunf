@@ -178,7 +178,7 @@ void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Textur
     Rectangle background_card = {0, 0, 220, 360};
     Rectangle background_viz_card = {140, 125, 220, 360};
     Rectangle background_pokemon = {0, 0, 198, 178};
-    Rectangle background_viz_pokemon = {165, 175, 198, 178};
+    Rectangle background_viz_pokemon = {151, 166, 198, 178};
 
     char card_title[30];
     char poke_img_path[30];
@@ -229,8 +229,7 @@ void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Textur
         DrawTexturePro(backgrounds_cards.super_trunfo_boards, background_card, background_viz_card, (Vector2){0, 0},
                        0, WHITE);
     }
-    else
-        DrawTexturePro(backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0, 0}, 0, WHITE);
+    else DrawTexturePro(backgrounds_cards.cards_boards, background_card, background_viz_card, (Vector2){0, 0}, 0, WHITE);
 
     DrawTextEx(poke_font, card_title, (Vector2){153, 137}, 18, 0.2, BLACK);
 
@@ -240,14 +239,14 @@ void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Textur
     snprintf(stats_text, sizeof(stats_text), "HP: %d", (int)card_info.b_hp);
     DrawTextEx(poke_font, stats_text, (Vector2){151, 372}, 15, 0.2, BLACK);
 
-    snprintf(stats_text, sizeof(stats_text), "ALT: %f", card_info.b_alt);
+    snprintf(stats_text, sizeof(stats_text), "ALT: %.2f", card_info.b_alt);
     DrawTextEx(poke_font, stats_text, (Vector2){260, 357}, 15, 0.2, BLACK);
 
-    snprintf(stats_text, sizeof(stats_text), "PSO: %f", card_info.b_pso);
+    snprintf(stats_text, sizeof(stats_text), "PSO: %.2f", card_info.b_pso);
     DrawTextEx(poke_font, stats_text, (Vector2){260, 372}, 15, 0.2, BLACK);
 
     snprintf(stats_text, sizeof(stats_text), "HAB: %s", hability[card_info.b_hab].nome);
     DrawTextEx(poke_font, stats_text, (Vector2){147, 392}, 15, 0.2, BLACK);
 
-    //DrawTextBoxed(poke_font, hability[card_info.b_hab].text, (Rectangle){147, 405, 205, 80}, 14, 0, true, BLACK);
+    DrawTextBoxed(poke_font, hability[card_info.b_hab].text, (Rectangle){147, 405, 205, 80}, 14, 0, true, BLACK);
 }

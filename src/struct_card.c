@@ -88,7 +88,7 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
     }
 }
 
-static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing,
+void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing,
                                     bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint,
                                     Color selectBackTint)
 {
@@ -231,7 +231,7 @@ static void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, 
     }
 }
 
-static void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint)
+void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint)
 {
     DrawTextBoxedSelectable(font, text, rec, fontSize, spacing, wordWrap, tint, 0, 0, WHITE, WHITE);
 }
@@ -297,7 +297,7 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
         DrawTextEx(poke_font, cardText, (Vector2){7, 265}, 15, 0.1, BLACK);
 
-        DrawTextBoxed(poke_font, cardText, (Rectangle){7, 280, 205, 80}, 14, 0, true, BLACK);
+        DrawTextBoxed(poke_font, hability[card->habilidade].text, (Rectangle){7, 280, 205, 80}, 14, 0, true, BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta

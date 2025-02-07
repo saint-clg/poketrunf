@@ -168,6 +168,7 @@ int main()
 
             ClearBackground(WHITE);
             battleAnimation(battleHUD, battleTransition);
+            
             EndDrawing();
         }
 
@@ -187,15 +188,16 @@ int main()
 
             static CreatMenu CreatCard_buffer = {
 
-                .b_name = "random_name",
-                .b_type = {false, false, false, false},
+                .b_name = "name",
+                .b_type = {true, false, false, false},
                 .b_trunfo = false,
                 .b_atk = 0,
                 .b_hp = 0,
                 .b_pso = 0,
                 .b_alt = 0,
                 .b_hab = DISABLE,
-                .p_img = "none"};
+                .p_img = "none"
+            };
 
             static bool show_filters = false;
             static bool addNewCard_menu = false;
@@ -280,10 +282,10 @@ int main()
                 static char stats_text[4][5];
                 static bool edit_stats_bar[4] = {false, false, false, false};
 
-                if (GuiWindowBox((Rectangle){120, 100, 560, 400}, "Creating Menu"))
+                if (GuiWindowBox((Rectangle){120, 100, 560, 440}, "Creating Menu"))
                     addNewCard_menu = false;
 
-                DrawRectangle(130, 120, 540, 370, DARKGRAY);
+                DrawRectangle(130, 120, 540, 410, DARKGRAY);
 
                 if (GuiTextBox((Rectangle){400, 140, 260, 40}, CreatCard_buffer.b_name, sizeof(CreatCard_buffer.b_name),
                                name_box))
@@ -298,7 +300,7 @@ int main()
                         name_box = true;
                 }
 
-                DrawRectangle(130, 125, 220, 360, BLACK);
+                DrawRectangle(140, 125, 220, 360, BLACK);
                 // LIGAR 1 DESLIGA OS OUTROS
                 if (GuiCheckBox((Rectangle){400, 190, 50, 40}, "ICE", &CreatCard_buffer.b_type[0]))
                 {
@@ -350,11 +352,9 @@ int main()
                     edit_stats_bar[3] = !edit_stats_bar[3];
                 }
 
-                if (GuiCheckBox((Rectangle){400, 390, 50, 40}, "TRUNFO", &CreatCard_buffer.b_trunfo))
-                    ;
+                if (GuiCheckBox((Rectangle){400, 390, 50, 40}, "TRUNFO", &CreatCard_buffer.b_trunfo));
                 if (GuiTextBox((Rectangle){525, 390, 135, 40}, CreatCard_buffer.p_img, sizeof(CreatCard_buffer.p_img),
-                               img_box))
-                {
+                               img_box)){
 
                     if (IsKeyPressed(KEY_ENTER))
                     {
