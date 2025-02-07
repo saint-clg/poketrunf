@@ -59,7 +59,12 @@
   "files.associations": {
     "raygui.h": "c",
     "string.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "cards.h": "c",
+    "stdlib.h": "c",
+    "struct_card.h": "c",
+    "deck_menu.h": "c",
+    "game_screen.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
