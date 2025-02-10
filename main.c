@@ -13,8 +13,6 @@
 #include "game_screen.h"
 
 float scrollOffset = 0;
-int TOTAL_CARDS;
-
 int main()
 {
 
@@ -63,18 +61,27 @@ int main()
     Texture2D pokemon_img[TOTAL_CARDS];
     Backgrounds_cards backgrounds_cards;
     Font poke_font;
-    Texture2D battleHUD[5];
+    Font Battle_hud_font;
+    Texture2D battleHUD[7];
     Texture2D battleTransition[16];
+    Texture2D battleBuffs[8];
+    Texture2D TypeTextures[4];
     Font font_mainmenu;
     Sound walk_menuSound;
     Sound enter_menuSound;
     Texture2D logo;
     Texture2D background_mainmenu;
 
-    InitCardsTextures(deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS, &poke_font, battleHUD, battleTransition, &font_mainmenu, &walk_menuSound, &enter_menuSound, &logo, &background_mainmenu);
+    InitAssets( deck, &backgrounds_cards, pokemon_img, TOTAL_CARDS, &poke_font, battleHUD, battleTransition, 
+                battleBuffs, TypeTextures, &font_mainmenu, &walk_menuSound, &enter_menuSound, &logo, &background_mainmenu, 
+                &Battle_hud_font);
 
     RenderTexture2D TextureCards[TOTAL_CARDS];
-    CreatCards(deck, backgrounds_cards, pokemon_img, TextureCards, poke_font, TOTAL_CARDS);
+
+    player1_deck = malloc(TOTAL_CARDS * sizeof(Cards));
+    player2_deck = malloc(TOTAL_CARDS * sizeof(Cards));
+
+    CreatCards(deck, backgrounds_cards, pokemon_img, TextureCards, poke_font);
 
     GameScreen CurrentScreen = MAIN_MENU;
 
@@ -82,6 +89,8 @@ int main()
     const char *menu_options[] = {"Play", "Deck", "Options", "Exit"};
 
     //--------------------------------------------------------------------------- WHILE DO JOGO
+
+    printf("%d", TOTAL_CARDS);
 
     while (!WindowShouldClose())
     {
@@ -151,10 +160,20 @@ int main()
         //--------------------------------------------------------------------------- PLAY
         if (CurrentScreen == PLAY)
         {
+            static bool InicializateGame = true;
+            static bool TransitionPlayed = false;   
+
+            ROUND = 0;
+
             BeginDrawing();
 
             ClearBackground(WHITE);
-            battleAnimation(battleHUD, battleTransition);
+            DrawPlayTextures(battleHUD, battleTransition, Battle_hud_font, player1_deck);
+            if(InicializateGame){
+                ShuffleDeck(deck);
+                InicializateGame = false;
+            }
+            battleHud(poke_font, battleHUD[5], battleHUD[6], walk_menuSound, player1_deck, TextureCards);
             
             EndDrawing();
         }
@@ -203,4 +222,6 @@ int main()
     CloseWindow();
     fclose(arq_dat);
     free(deck);
+    free(player1_deck);
+    free(player2_deck);
 }

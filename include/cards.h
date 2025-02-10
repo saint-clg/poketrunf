@@ -5,6 +5,8 @@
 
 // Declarações de funções e structs
 
+extern int TOTAL_CARDS;
+
 typedef struct
 {
     char nome[20];
@@ -17,6 +19,7 @@ typedef struct
     float altura;
     int habilidade;
     char img[30];
+    RenderTexture2D card_texture;
 }Cards; // ESTRUTURA PARA AS CARTAS
 
 typedef struct {
@@ -92,7 +95,7 @@ extern float scrollOffset;
 
 //FUNCTIONS -----------------------------------------------------------------------------------------------------
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards, Font poke_font);
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[]);
 
 void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer, Font poke_font);
 

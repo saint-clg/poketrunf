@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 #include "raylib.h"
 #include "cards.h"
 #include "struct_card.h"
+
+int TOTAL_CARDS;
 
 void disable()
 {
@@ -14,6 +17,38 @@ void secret_power()
 {
     printf("magia!");
 };
+/*void secret_power(Cards *card_player, Cards *card_enemy)
+{
+    static int secret_count = 0;
+
+    if(card_player->ataque > secret_count){
+        secret_count = 1;
+    };
+    if(card_player->hp > secret_count){
+        secret_count = 2;
+    };
+    if(card_player->altura > secret_count){
+        secret_count = 3;
+    };
+    if(card_player->peso > secret_count){
+        secret_count = 4;
+    };
+
+
+    if(secret_count == 1){
+        card_enemy->ataque = card_enemy->ataque - 5;
+    };
+    if(secret_count == 2){
+        card_enemy->hp = card_enemy->hp - 5;
+    };
+    if(secret_count == 3){
+        card_enemy->altura = card_enemy->altura - 5;
+    };
+    if(secret_count == 4){
+        card_enemy->peso = card_enemy->peso - 5;
+    };
+    
+};*/
 void adaptative_terrain()
 {
     printf("magia!");
@@ -69,7 +104,7 @@ Hability hability[TOTAL_HABILITIES] = {
     {"FUTURE_SIGHT", "Vislumbra o futuro! Se vencer, rouba duas cartas do inimigo...\nSe perder, compra um item e altera o campo de batalha para uma vantagem inesperada...\n.", future_sight},
     {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}};
 
-void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[], int total_cards)
+void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[])
 {
     // Definindo o tamanho e o espaçamento das cartas
     int cardWidth = 110;
@@ -84,7 +119,7 @@ void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D Text
 
     // Inicia a renderização
 
-    for (int i = 0, s = 0; i < total_cards; i++)
+    for (int i = 0, s = 0; i < TOTAL_CARDS; i++)
     {
 
         filter = true;
@@ -181,7 +216,7 @@ void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Textur
 
     char card_title[30];
     char poke_img_path[30];
-    const char stats_text[30];
+    char stats_text[30];
 
     if (card_info.b_type[0])
     {

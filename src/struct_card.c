@@ -58,7 +58,10 @@ int CountLines(FILE *arq_dat)
     return lines;
 } // conta quantas linhas tem no arquivo csv (quantidade de cartas)
 
-void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *pokemon_img, int totalCards, Font *poke_font, Texture2D battleHUD[], Texture2D battleTransition[], Font *font_mainmenu, Sound *walk_menuSound, Sound *enter_menuSound, Texture2D *logo, Texture2D *background_mainmenu)
+void InitAssets(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *pokemon_img, int totalCards, 
+                Font *poke_font, Texture2D battleHUD[], Texture2D battleTransition[], Texture2D battleBuffs[], 
+                Texture2D TypesTextures[], Font *font_mainmenu, Sound *walk_menuSound, Sound *enter_menuSound, Texture2D *logo, 
+                Texture2D *background_mainmenu, Font *Battle_hud_font)
 {
     // Carregar a textura de fundo da carta
     backgrounds_cards->card_background = LoadTexture(".\\assets\\cards\\img\\card_background.png");
@@ -95,6 +98,22 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
     battleHUD[2] = LoadTexture(".\\assets\\img\\battle\\battle_player2.png");
     battleHUD[3] = LoadTexture(".\\assets\\img\\battle\\battle_terrain_player1.png");
     battleHUD[4] = LoadTexture(".\\assets\\img\\battle\\battle_terrain_player2.png");
+    battleHUD[5] = LoadTexture(".\\assets\\img\\battle\\arrow_black.png");
+    battleHUD[6] = LoadTexture(".\\assets\\img\\battle\\arrow_red.png");
+
+    battleBuffs[0] = LoadTexture(".\\assets\\img\\battle\\buffs\\-atk.png");
+    battleBuffs[1] = LoadTexture(".\\assets\\img\\battle\\buffs\\-hp.png");
+    battleBuffs[2] = LoadTexture(".\\assets\\img\\battle\\buffs\\-alt.png");
+    battleBuffs[3] = LoadTexture(".\\assets\\img\\battle\\buffs\\-pso.png");
+    battleBuffs[4] = LoadTexture(".\\assets\\img\\battle\\buffs\\+atk.png");
+    battleBuffs[5] = LoadTexture(".\\assets\\img\\battle\\buffs\\+hp.png");
+    battleBuffs[6] = LoadTexture(".\\assets\\img\\battle\\buffs\\+alt.png");    
+    battleBuffs[7] = LoadTexture(".\\assets\\img\\battle\\buffs\\+pso.png");
+
+    TypesTextures[0] = LoadTexture(".\\assets\\img\\battle\\types\\ice.png");
+    TypesTextures[1] = LoadTexture(".\\assets\\img\\battle\\types\\fighting.png");
+    TypesTextures[2] = LoadTexture(".\\assets\\img\\battle\\types\\dragon.png");
+    TypesTextures[3] = LoadTexture(".\\assets\\img\\battle\\types\\psychic.png");
 
     char path_btransition[50];
     for (int i = 0; i < 16; i++)
@@ -103,8 +122,8 @@ void InitCardsTextures(Cards card[], Backgrounds_cards *backgrounds_cards, Textu
         battleTransition[i] = LoadTexture(path_btransition); // Converte para textura
     }
 
-    
     *font_mainmenu = LoadFont(".\\assets\\fonts\\Minecraft.ttf");
+    *Battle_hud_font = LoadFont (".\\assets\\fonts\\pokemon_fire_red.ttf");
     *walk_menuSound = LoadSound(".\\assets\\sounds\\move_menu.wav");
     *enter_menuSound = LoadSound(".\\assets\\sounds\\enter_menu.wav");
     *logo = LoadTexture(".\\assets\\img\\logo.png");
@@ -263,7 +282,7 @@ void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, f
 }
 
 void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[],
-                Font poke_font, int TOTAL_CARDS)
+                Font poke_font)
 {
 
     for (int i = 0; i < TOTAL_CARDS; i++)
@@ -309,23 +328,25 @@ void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke
         DrawTextEx(poke_font, cardText, (Vector2){13, 12}, 18, 0.2, BLACK);
 
         snprintf(cardText, sizeof(cardText), "ATK: %d", card[i].ataque);
-        DrawTextEx(poke_font, cardText, (Vector2){11, 230}, 15, 0.2, BLACK);
+        DrawTextEx(poke_font, cardText, (Vector2){11, 230}, 18, 0.2, BLACK);
 
         snprintf(cardText, sizeof(cardText), "HP: %d", card[i].hp);
-        DrawTextEx(poke_font, cardText, (Vector2){11, 245}, 15, 0.2, BLACK);
+        DrawTextEx(poke_font, cardText, (Vector2){11, 245}, 18, 0.2, BLACK);
 
         snprintf(cardText, sizeof(cardText), "ALT: %.2f", card[i].altura);
-        DrawTextEx(poke_font, cardText, (Vector2){120, 230}, 15, 0.2, BLACK);
+        DrawTextEx(poke_font, cardText, (Vector2){120, 230}, 18, 0.2, BLACK);
 
         snprintf(cardText, sizeof(cardText), "PSO: %.2f", card[i].peso);
-        DrawTextEx(poke_font, cardText, (Vector2){120, 245}, 15, 0.2, BLACK);
+        DrawTextEx(poke_font, cardText, (Vector2){120, 245}, 18, 0.2, BLACK);
 
         snprintf(cardText, sizeof(cardText), "Hab: %s", hability[card[i].habilidade].nome);
         DrawTextEx(poke_font, cardText, (Vector2){7, 265}, 15, 0.1, BLACK);
 
-        DrawTextBoxed(poke_font, hability[card->habilidade].text, (Rectangle){7, 280, 205, 80}, 14, 0, true, BLACK);
+        DrawTextBoxed(poke_font, hability[card[i].habilidade].text, (Rectangle){7, 280, 205, 80}, 15, 0, true, BLACK);
 
         EndTextureMode();
         // Retornar a textura renderizada da carta
+
+        card[i].card_texture = CardTexture[i];
     }
 }

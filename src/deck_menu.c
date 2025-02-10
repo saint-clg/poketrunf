@@ -67,7 +67,7 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
             search_box = true; // LÓGICA DE PESQUISA POR ENTER E CAIXA VAZIA
     }
 
-    ShowCards_Menu(deck, *filters_deck, TextureCards, *TOTAL_CARDS, poke_font);
+    ShowCards_Menu(deck, *filters_deck, TextureCards);
 
     if (IsKeyDown(KEY_LEFT_CONTROL) && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     {
