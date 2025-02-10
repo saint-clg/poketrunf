@@ -53,7 +53,7 @@ int main()
 
     } // if (PRIMEIRA INICIALIZAÇÃO);
 
-    TOTAL_CARDS = CountLines(arq_dat);                      // CADA LINHA DO .DAT É UMA CARTA
+    TOTAL_CARDS = CountLines(arq_dat);                          // CADA LINHA DO .DAT É UMA CARTA
     Cards *deck = (Cards *)malloc(TOTAL_CARDS * sizeof(Cards)); // CRIA NOSSO DECK COM TAMANHO VARIADO PARA AS CARTAS
 
     printf("Criando deck...\n\n\n");
@@ -155,7 +155,7 @@ int main()
 
             ClearBackground(WHITE);
             battleAnimation(battleHUD, battleTransition);
-            
+
             EndDrawing();
         }
 
@@ -183,14 +183,15 @@ int main()
                 .b_pso = 0,
                 .b_alt = 0,
                 .b_hab = DISABLE,
-                .p_img = "none"
-            };
+                .p_img = "none"};
 
             static bool addNewCard_menu = false;
+            static bool addNewCard_confirm = false;
 
             InitDeck(&enter_menuSound, &CurrentScreen, &addNewCard_menu, deck, &filters_deck, TextureCards, &TOTAL_CARDS, poke_font, &CreatCard_buffer, &backgrounds_cards);
 
-            
+            if ()
+                deck = (Cards *)realloc(deck, (TOTAL_CARDS + 1) * sizeof(Cards));
         }
         //-----------------------------------------------------------------------------------END DECK MENU
     }
