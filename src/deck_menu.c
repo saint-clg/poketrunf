@@ -8,7 +8,8 @@
 #include <string.h>
 #include "game_screen.h"
 
-void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards){
+void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards)
+{
 
     static bool show_filters = false;
     static bool editCard_menu = false;
@@ -51,7 +52,7 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
 
     // CAIXA DE TEXTO PARA PESQUISA DO NOME
     if (GuiTextBox((Rectangle){35, 435, 190, 30}, filters_deck->search_name,
-                    sizeof(filters_deck->search_name), search_box))
+                   sizeof(filters_deck->search_name), search_box))
     {
 
         if (IsKeyPressed(KEY_ENTER))
@@ -98,7 +99,7 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
         DrawRectangle(130, 120, 540, 410, DARKGRAY);
 
         if (GuiTextBox((Rectangle){400, 140, 260, 40}, CreatCard_buffer->b_name, sizeof(CreatCard_buffer->b_name),
-                        name_box))
+                       name_box))
         {
 
             if (IsKeyPressed(KEY_ENTER))
@@ -162,9 +163,11 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
             edit_stats_bar[3] = !edit_stats_bar[3];
         }
 
-        if (GuiCheckBox((Rectangle){400, 390, 50, 40}, "TRUNFO", &CreatCard_buffer->b_trunfo));
+        if (GuiCheckBox((Rectangle){400, 390, 50, 40}, "TRUNFO", &CreatCard_buffer->b_trunfo))
+            ;
         if (GuiTextBox((Rectangle){525, 390, 135, 40}, CreatCard_buffer->p_img, sizeof(CreatCard_buffer->p_img),
-                        img_box)){
+                       img_box))
+        {
 
             if (IsKeyPressed(KEY_ENTER))
             {
@@ -177,7 +180,48 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
 
         if (GuiButton((Rectangle){140, 495, 220, 30}, "CONFIRM"))
         {
+            Cards nova_carta;
+
+            strcpy(nova_carta.nome, CreatCard_buffer->b_name);
+            nova_carta.tipo = (CreatCard_buffer->b_type[0]) ? 'G' : (CreatCard_buffer->b_type[1]) ? 'L'
+                                                                : (CreatCard_buffer->b_type[2])   ? 'D'
+                                                                : (CreatCard_buffer->b_type[3])   ? 'P'
+                                                                                                  : 'X';
+
+            nova_carta.hp = (int)CreatCard_buffer->b_hp;
+            nova_carta.ataque = (int)CreatCard_buffer->b_atk;
+            nova_carta.peso = CreatCard_buffer->b_pso;
+            nova_carta.altura = CreatCard_buffer->b_alt;
+            nova_carta.trunfo = CreatCard_buffer->b_trunfo;
+            nova_carta.habilidade = CreatCard_buffer->b_hab;
+            strcpy(nova_carta.img, CreatCard_buffer->p_img); // Se existir na struct Cards
+
+            int num = 1;
+            for (int i = 0; i < TOTAL_CARDS; i++)
+            {
+                if (deck[i].tipo == nova_carta.tipo)
+                {
+                    num++;
+                }
+            }
+            nova_carta.numero = num;
+
+            // Se for SUPER TRUNFO, desativa qualquer outro do mesmo tipo
+            if (nova_carta.trunfo)
+            {
+                for (int i = 0; i < TOTAL_CARDS; i++)
+                {
+                    if (deck[i].tipo == nova_carta.tipo && deck[i].trunfo)
+                    {
+                        deck[i].trunfo = false;
+                    }
+                }
+            }
+
+            TOTAL_CARDS++;
+            deck[TOTAL_CARDS] = nova_carta;
         }
+
         if (GuiButton((Rectangle){400, 440, 260, 30}, "VISUALIZER"))
         {
         }
@@ -235,4 +279,4 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
     EndDrawing();
 
     return;
-}//InitDeck
+} // InitDeck
