@@ -161,7 +161,9 @@ int main()
         if (CurrentScreen == PLAY)
         {
             static bool InicializateGame = true;
-            static bool TransitionPlayed = false;   
+            static bool TransitionPlayed = false;
+            const char  InicializeGame[100] = "Inicializando Jogo...";
+            static float frameCounter = 0; 
 
             ROUND = 0;
 
@@ -171,6 +173,7 @@ int main()
             DrawPlayTextures(battleHUD, battleTransition, Battle_hud_font, player1_deck);
             if(InicializateGame){
                 ShuffleDeck(deck);
+                AnimatedTextBox(InicializateGame, Battle_hud_font, &frameCounter);  
                 InicializateGame = false;
             }
             battleHud(poke_font, battleHUD[5], battleHUD[6], walk_menuSound, player1_deck, TextureCards);

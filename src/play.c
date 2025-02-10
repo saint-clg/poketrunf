@@ -163,12 +163,14 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
     static Vector2 arrowr_position = {380,460};
     static int walk_battle_options = 0;
     static bool play = false;
+    static bool deck = false;
     static bool itens = false;
-    static bool sub_text = false;
+    static bool hab = false;
     static bool end_subText = false;
+    static int count_deck = 0;
     char text_box[300];
 
-    if(!sub_text){
+    if(!hab){
         if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_LEFT)) {
             PlaySound(walk_menuSound);
 
@@ -197,11 +199,11 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
 
     if(IsKeyPressed(KEY_Z)){
         PlaySound(walk_menuSound);
-        if(!play && !itens && !sub_text){
+        if(!play && !itens && !hab){
             if (walk_battle_options == 0) play = true;
-            if (walk_battle_options == 1){} //deck
+            if (walk_battle_options == 1){} deck = true;
             if (walk_battle_options == 2) itens = true;
-            if (walk_battle_options == 3) sub_text = true;
+            if (walk_battle_options == 3) hab = true;
 
         }   
         if(play){
@@ -234,8 +236,29 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
         }
     }// OPÇÕES PARA JOGA
 
+    if(deck){
+        // Desenha a seta vermelha para mostrar a habilidade
+        DrawTextureEx(Arrow_red, arrowr_position, 90.0f, 3.5, RED);
 
-    if (sub_text)
+        for(int i = 0; i < TOTAL_CARDS; i++){
+            
+            if(player1_deck[i] != NULL){
+
+                count_deck++;
+            }
+        }
+
+        snprintf(text_box, sizeof(text_box), "SEU DE CONTÉM %d CARTAS\n", count_deck);	
+        
+
+        end_subText = AnimatedTextBox(text_box, battle_hud_font, &frameCounter);
+        if(end_subText && IsKeyPressed(KEY_Z)){
+
+            frameCounter = 0.0f;
+            hab = false;
+        }
+    }
+    if (hab)
     {
         // Desenha a seta vermelha para mostrar a habilidade
         DrawTextureEx(Arrow_red, arrowr_position, 90.0f, 3.5, RED);
@@ -250,7 +273,7 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
         if(end_subText && IsKeyPressed(KEY_Z)){
 
             frameCounter = 0.0f;
-            sub_text = false;
+            hab = false;
         }
     }
 }
