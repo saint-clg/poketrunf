@@ -13,7 +13,7 @@ void ShuffleDeck(Cards deck[]);
 bool battleAnimation(   Texture2D battleTransition[], float *pos_player1, float *pos_player2, 
                         float *pos_terrain1, float *pos_terrain2);
 
-bool AnimatedHability();
+void AnimatedHability();
 
 void AnimatedPlaying(Texture2D player1_card, Texture2D player2_card, int *Playing);
 

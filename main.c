@@ -193,38 +193,16 @@ int main()
                     load_round = true;
                     printf("CARREGANDO ROUND...");
                 }
-                if(Playing == 2){
-                    AnimatedHability();
-                }
-                    /*if(hability[player1_deck[ROUND].habilidade].hability_function( &player1_deck[ROUND], 
-                                                                                &player2_deck[ROUND],battleBuffs,
-                                                                                1, &NBUFF_P, &NBUFF_E)){
+            }
+            if(Playing == 2){
+                AnimatedHability();
+            }
+            if(Playing == 3){
 
-                        if(hability[player2_deck[ROUND].habilidade].hability_function( &player2_deck[ROUND], 
-                                                                                    &player1_deck[ROUND],battleBuffs,
-                                                                                    0, &NBUFF_P, &NBUFF_E)){
-                                
-                                //COMPARATION
-                                Playing = 0;
-                            }
-                    }
-
-                }
-                if(end_AnimatedPlaying && ROUND %2 != 0){
-                    
-                    if(hability[player2_deck[ROUND].habilidade].hability_function( &player2_deck[ROUND], 
-                                                                                &player1_deck[ROUND],battleBuffs,
-                                                                                0, &NBUFF_P, &NBUFF_E)){
-
-                        if(hability[player1_deck[ROUND].habilidade].hability_function( &player1_deck[ROUND], 
-                                                                                    &player2_deck[ROUND],battleBuffs,
-                                                                                    1, &NBUFF_P, &NBUFF_E)){
-                                
-                                //COMPARATION
-                                Playing = 0;
-                            }
-                    }
-                }*/
+                /*hability[player1_deck[ROUND].habilidade].hability_function( player1_deck[ROUND],
+                                                                            player2_deck[ROUND],
+                                                                            battleBuffs,1,&NBUFF_P,&NBUFF_E);*/
+                printf("HABILIDADEEEEEEEEEEE!!");
             }
             
             EndDrawing();

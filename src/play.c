@@ -87,7 +87,7 @@ bool battleAnimation(   Texture2D battleTransition[], float *pos_player1, float 
 
     return transitionPlayed;
 }
-bool AnimatedHability(){
+void AnimatedHability(int *Playing){
 
     Rectangle pos_buff = {365,40,209,342};
     Rectangle pos_debuff = {150, 40, 209, 342};
@@ -117,10 +117,10 @@ bool AnimatedHability(){
         timeCount = 0;
         opacity = 0; 
 
-        return false;
+        *Playing = 3;
+
     }
-    
-    return true;
+
 }
 
 void AnimatedPlaying(Texture2D player1_card, Texture2D player2_card, int *Playing){
@@ -128,16 +128,20 @@ void AnimatedPlaying(Texture2D player1_card, Texture2D player2_card, int *Playin
     static float frameCount = 0.0f;
     
     static Vector2 pos_card = {580,85};
+    static bool end_animation = false;
 
     if(pos_card.x != 365 && pos_card.y != 40){
 
         pos_card.x -= 5;
         pos_card.y -= 1;
-
-    }else{
-        *Playing == 2;
-    } 
         
+
+    }else end_animation = true;
+
+    if(end_animation){
+
+        *Playing = 2;
+    }
     DrawTexturePro(player1_card, (Rectangle){0, 0, 220, -360},
                    (Rectangle){pos_card.x, pos_card.y, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
     DrawTexturePro(player2_card, (Rectangle){0, 0, 220, -360},

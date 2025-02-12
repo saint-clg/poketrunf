@@ -12,11 +12,11 @@ int TOTAL_CARDS;
 typedef enum {  LATK = 0, LHP, LALT, LPESO, UATK, UHP, UALT, UPESO, TOTAL_BUFFS} Buff_code;
 
 bool disable(   Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
-                bool player, int *NBUFF_P, int *NBUFF_E)
+                bool player, int *NBUFF_P, int *NBUFF_E, int *Playing)
 {
     printf("magia!");
 
-    return true;
+    Playing++;
 };
 bool secret_power(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
                     bool player, int *NBUFF_P, int *NBUFF_E)
