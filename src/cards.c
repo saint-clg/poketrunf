@@ -9,85 +9,360 @@
 
 int TOTAL_CARDS;
 
-void disable()
+typedef enum {  LATK = 0, LHP, LALT, LPESO, UATK, UHP, UALT, UPESO, TOTAL_BUFFS} Buff_code;
+
+bool disable(   Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
 {
     printf("magia!");
+
+    return true;
 };
-void secret_power()
-{
-    printf("magia!");
-};
-/*void secret_power(Cards *card_player, Cards *card_enemy)
-{
+bool secret_power(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E)
+{       
+    static int one_time = true;
     static int secret_count = 0;
+    static int debuf_ID = 0;
+    static int buff_count;
 
-    if(card_player->ataque > secret_count){
-        secret_count = 1;
-    };
-    if(card_player->hp > secret_count){
-        secret_count = 2;
-    };
-    if(card_player->altura > secret_count){
-        secret_count = 3;
-    };
-    if(card_player->peso > secret_count){
-        secret_count = 4;
-    };
+    if(one_time){
+
+        if(card_player->ataque > secret_count){
+            secret_count = 1;
+            debuf_ID = LATK;
+        };
+        if(card_player->hp > secret_count){
+            secret_count = 2;
+            debuf_ID = LHP;
+        };
+        if(card_player->altura > secret_count){
+            secret_count = 3;
+            debuf_ID = LALT;
+        };
+        if(card_player->peso > secret_count){
+            secret_count = 4;
+            debuf_ID = LPESO;
+        };
 
 
-    if(secret_count == 1){
-        card_enemy->ataque = card_enemy->ataque - 5;
-    };
-    if(secret_count == 2){
-        card_enemy->hp = card_enemy->hp - 5;
-    };
-    if(secret_count == 3){
-        card_enemy->altura = card_enemy->altura - 5;
-    };
-    if(secret_count == 4){
-        card_enemy->peso = card_enemy->peso - 5;
-    };
+        if(secret_count == 1){
+            card_enemy->ataque = card_enemy->ataque - 5;
+        };
+        if(secret_count == 2){
+            card_enemy->hp = card_enemy->hp - 5;
+        };
+        if(secret_count == 3){
+            card_enemy->altura = card_enemy->altura - 5;
+        };
+        if(secret_count == 4){
+            card_enemy->peso = card_enemy->peso - 5;
+        };
+
+    }
+
+    if(player && one_time){
+
+        *NBUFF_E++;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }else {
+        *NBUFF_P ++;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }
+
+    if(AnimatedBuffs(battleBuffs, debuf_ID, buff_count, player)){
+
+        one_time  = true;
+
+        return true;
+    }
+
+    return false;
+};
+bool adaptative_terrain(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                        bool player, int *NBUFF_P, int *NBUFF_E)
+{
+
+    printf("MUDA TERRENO");
+    return true;
+}
+bool teasure_hunt(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E)
+{
+    printf("PUXA UM ITEM DA PILHA DE ITENS");
+
+    return true;
+};
+bool swords_dance(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E)
+{
+    static bool one_time  = true;
+    static int buff_count;
+
+    if(one_time){
+
+        card_player->ataque += 15;
+        one_time = false;
+    }
+
+    if(player && one_time){
+
+        *NBUFF_P++;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E ++;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    if(AnimatedBuffs(battleBuffs, UATK, buff_count, player)){
+
+        one_time = true;
+        buff_count = 0;
+        return true;
+    }
+
+    return false;
+};
+bool heal_pulse(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
+{
+    static bool one_time = true;
+    static int buff_count = 0;
+
+    if(one_time){
+
+        card_player->hp += 10;
+        one_time = false;
+    }
+
+    if(player && one_time){
+
+        *NBUFF_P++;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E ++;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    if(AnimatedBuffs(battleBuffs, UHP, buff_count, player)){
+
+        one_time = true;
+        buff_count = 0;
+        return true;
+    }
+
+    return false;
+};
+bool heavy_slam(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
+{
+    static bool one_time = true;
+    static int buff_count = 0;
+
+    if(one_time){
+
+        card_player->peso += 10;
+        one_time = false;
+    }
+
+    if(player && one_time){
+
+        *NBUFF_P++;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E ++;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    if(AnimatedBuffs(battleBuffs, UPESO, buff_count, player)){
+
+        one_time = true;
+        buff_count = 0;
+
+        return true;
+    }
+
+    return false;
+};
+bool levitate(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
+{   
+    static bool one_time = true;
+    static int buff_count = 0;
     
-};*/
-void adaptative_terrain()
-{
-    printf("magia!");
+    if(one_time){
+
+        card_player->altura += 10;
+        one_time = false;
+    }
+
+    if(player && one_time){
+
+        *NBUFF_P++;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E ++;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    if(AnimatedBuffs(battleBuffs, UALT, buff_count, player)){
+
+        one_time = true;
+        buff_count = 0;
+        return true;
+    }
+
+    return false;
 };
-void teasure_hunt()
-{
-    printf("magia!");
+bool dragons_dance( Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E)
+{   
+    static bool one_time = true;
+    static float frames = 0.0f;
+    static int buff_count = 0;
+
+    if(one_time){
+
+        card_player->ataque += 20;
+        card_player->hp += 20;
+
+        one_time = false;
+    }
+
+    frames += GetFrameTime();
+
+    if(player && one_time){
+
+        *NBUFF_P += 2;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E += 2;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    AnimatedBuffs(battleBuffs, UATK, buff_count - 1, player);
+    
+    if(frames > 0.25f){
+
+        if(AnimatedBuffs(battleBuffs, UATK, buff_count, player)){
+
+            frames = 0;
+            one_time = true;
+            buff_count = 0;
+            return true;
+        }
+    }
+
+    return false;
 };
-void swords_dance()
+bool bulk_up(   Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
 {
-    printf("magia!");
+    static bool one_time = true;
+    static float frames = 0.0f;
+    static int buff_count = 0;
+
+    if(one_time){
+
+        card_player->altura += 20;
+        card_player->peso += 20;
+
+        one_time = false;
+    }
+
+    frames += GetFrameTime();
+
+    if(player && one_time){
+
+        *NBUFF_P+=2;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }else {
+        *NBUFF_E +=2;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }
+    AnimatedBuffs(battleBuffs, UALT, buff_count -1, player);
+
+    if(frames > 0.25f){
+        
+        if(AnimatedBuffs(battleBuffs, UPESO, buff_count, player)){
+
+            frames = 0.0f;
+            one_time = true;
+            return true;
+        }
+    }
+
+    return false;
 };
-void heal_pulse()
+bool future_sight(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E)
 {
-    printf("magia!");
+    //FUTURE_SIGHT = !FUTURE_SIGHT;
+    printf("FUTURE_SIGHT!");
+
+    return true;
 };
-void heavy_slam()
+bool blizzard(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E)
 {
-    printf("magia!");
-};
-void levitate()
-{
-    printf("magia!");
-};
-void dragons_dance()
-{
-    printf("magia!");
-};
-void bulk_up()
-{
-    printf("magia!");
-};
-void future_sight()
-{
-    printf("magia!");
-};
-void blizzard()
-{
-    printf("magia!");
+    static bool one_time = true;
+    static float frames = 0.0f;
+    static int buff_count = 0;
+
+    if(one_time){
+
+        card_enemy->ataque -= 10;
+        card_enemy->hp -= 10;
+        card_enemy->altura -= 10;
+        card_enemy->peso -= 10;
+
+        one_time = false;
+    }
+
+    frames += GetFrameTime();
+
+    if(player && one_time){
+
+        *NBUFF_E += 4;
+        buff_count = *NBUFF_E;
+        one_time = false;
+    }else {
+        *NBUFF_P += 4;
+        buff_count = *NBUFF_P;
+        one_time = false;
+    }
+    AnimatedBuffs(battleBuffs, LATK, buff_count - 3, player);
+
+    if(frames > 0.25f){
+
+        AnimatedBuffs(battleBuffs, LHP, buff_count - 2, player);
+    }
+    if (frames > 0.45) {
+        
+        AnimatedBuffs(battleBuffs, LALT, buff_count - 1, player);
+    }
+    if(frames > 0.50f){
+
+        if(AnimatedBuffs(battleBuffs, LPESO, buff_count, player)){
+
+            frames = 0;
+            one_time = true;
+            buff_count = 0;
+            return true;
+        }
+    }
+
+    return false;
+
 };
 
 Hability hability[TOTAL_HABILITIES] = {
@@ -103,6 +378,38 @@ Hability hability[TOTAL_HABILITIES] = {
     {"BULK_UP", "Aumenta significativamente a massa e o tamanho da carta, elevando seu peso e altura, quando um corpo impressionante.", bulk_up},
     {"FUTURE_SIGHT", "Vislumbra o futuro! Se vencer, rouba duas cartas do inimigo...\nSe perder, compra um item e altera o campo de batalha para uma vantagem inesperada...\n.", future_sight},
     {"BLIZZARD", "Uma tempestade de gelo devastadora que congela a carta inimiga, reduzindo drasticamente todos os seus atributos.", blizzard}};
+
+bool AnimatedBuffs(Texture2D battleBuffs[], int ID_buff, int n_buff, bool player){ 
+    static int posy_player = 600;
+    static int posy_enemy = -33;
+    float scale;
+        
+    Vector2 buff_pos;
+    
+    if (player) {
+        scale = 3.5;
+        buff_pos = (Vector2){10 + (n_buff * 110), posy_player}; 
+
+        if (posy_player > 380) {
+            posy_player -= 5;  // Move para cima
+            return true;
+        }
+    } else {
+        scale = 3.1;
+    
+        buff_pos = (Vector2){240 + (n_buff * 85), posy_enemy};
+    
+        if (posy_enemy < 5) {
+            posy_enemy += 2;  // Move para baixo
+            return true;
+        }
+    
+    }
+    
+    DrawTextureEx(battleBuffs[ID_buff], buff_pos, 0.0f, scale, BLACK);
+    
+    return false;
+}
 
 void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[])
 {

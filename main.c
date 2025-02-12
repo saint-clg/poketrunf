@@ -88,6 +88,11 @@ int main()
     int walk_menu = 0, screenWidth = GetScreenWidth();
     const char *menu_options[] = {"Play", "Deck", "Options", "Exit"};
 
+    int Playing = 0;
+
+    int NBUFF_P = 0;
+    int NBUFF_E = 0;
+
     //--------------------------------------------------------------------------- WHILE DO JOGO
 
     printf("%d", TOTAL_CARDS);
@@ -159,9 +164,12 @@ int main()
         }
         //--------------------------------------------------------------------------- PLAY
         if (CurrentScreen == PLAY)
-        {
+        {   
+            printf("%d", Playing);
+
             static bool InicializateGame = true;
-            static bool TransitionPlayed = false;
+            static bool end_AnimatedPlaying;
+            static bool load_round = false;
             const char  InicializeGame[100] = "Inicializando Jogo...";
             static float frameCounter = 0; 
 
@@ -170,7 +178,54 @@ int main()
             BeginDrawing();
 
             ClearBackground(WHITE);
-            battleAnimation(battleHUD, battleTransition);
+            DrawPlayTextures(battleHUD,battleTransition,poke_font,player1_deck, &Playing);
+            battleHud(poke_font,battleHUD[5], battleHUD[6], walk_menuSound, player1_deck, TextureCards, &Playing);
+            if(InicializateGame){
+                ShuffleDeck(deck);
+                InicializateGame = false;
+                printf("PREPARANDO DECK...");
+            }
+            if(Playing == 1){
+                if(!load_round){
+                    NBUFF_E = 0;
+                    NBUFF_P = 0;
+                    ROUND++;
+                    load_round = true;
+                    printf("CARREGANDO ROUND...");
+                }
+                if(Playing == 2){
+                    AnimatedHability();
+                }
+                    /*if(hability[player1_deck[ROUND].habilidade].hability_function( &player1_deck[ROUND], 
+                                                                                &player2_deck[ROUND],battleBuffs,
+                                                                                1, &NBUFF_P, &NBUFF_E)){
+
+                        if(hability[player2_deck[ROUND].habilidade].hability_function( &player2_deck[ROUND], 
+                                                                                    &player1_deck[ROUND],battleBuffs,
+                                                                                    0, &NBUFF_P, &NBUFF_E)){
+                                
+                                //COMPARATION
+                                Playing = 0;
+                            }
+                    }
+
+                }
+                if(end_AnimatedPlaying && ROUND %2 != 0){
+                    
+                    if(hability[player2_deck[ROUND].habilidade].hability_function( &player2_deck[ROUND], 
+                                                                                &player1_deck[ROUND],battleBuffs,
+                                                                                0, &NBUFF_P, &NBUFF_E)){
+
+                        if(hability[player1_deck[ROUND].habilidade].hability_function( &player1_deck[ROUND], 
+                                                                                    &player2_deck[ROUND],battleBuffs,
+                                                                                    1, &NBUFF_P, &NBUFF_E)){
+                                
+                                //COMPARATION
+                                Playing = 0;
+                            }
+                    }
+                }*/
+            }
             
             EndDrawing();
         }
@@ -204,12 +259,13 @@ int main()
             static bool addNewCard_menu = false;
             static bool addNewCard_confirm = false;
 
-            InitDeck(&enter_menuSound, &CurrentScreen, &addNewCard_menu, deck, &filters_deck, TextureCards, &TOTAL_CARDS, poke_font, &CreatCard_buffer, &backgrounds_cards);
+            InitDeck(   &enter_menuSound, &CurrentScreen, &addNewCard_menu, deck, &filters_deck, TextureCards, 
+                        &TOTAL_CARDS, poke_font, &CreatCard_buffer, &backgrounds_cards, &buffer);
 
-            if ()
-                deck = (Cards *)realloc(deck, (TOTAL_CARDS + 1) * sizeof(Cards));
-        }
+            
+                        
         //-----------------------------------------------------------------------------------END DECK MENU
+        }
     }
 
     UnloadSound(walk_menuSound);

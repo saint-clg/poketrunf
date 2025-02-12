@@ -64,7 +64,8 @@
     "stdlib.h": "c",
     "struct_card.h": "c",
     "deck_menu.h": "c",
-    "game_screen.h": "c"
+    "game_screen.h": "c",
+    "play.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

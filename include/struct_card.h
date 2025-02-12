@@ -3,8 +3,6 @@
 
 // Declarações de funções e structs
 
-#endif // STRUCT_CARDS_H
-
 void Strings(char a[], int b);
 
 void SaveBin(FILE *arq_csv, FILE *arq_dat, Cards *buffer);
@@ -24,3 +22,5 @@ void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, f
 
 void CreatCards(Cards card[], Backgrounds_cards background_cards, Texture2D poke_img[], RenderTexture2D CardTexture[], 
                 Font poke_font);
+
+#endif

@@ -47,23 +47,42 @@ typedef enum {  DISABLE, // #generic #hability
                 TOTAL_HABILITIES // #devinf
 }Hab_code; // HABILIDADES E SEUS CÓDIGOS
 
-void disable();
-void secret_power();
-void adaptative_terrain();
-void teasure_hunt();
-void swords_dance();
-void heal_pulse();
-void heavy_slam();
-void levitate();
-void dragons_dance();
-void bulk_up();
-void future_sight();
-void blizzard();
+// HAB FUNCTIONS
+bool disable(   Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool secret_power(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+    bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool adaptative_terrain(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+        bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool heal_pulse(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool heavy_slam(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool levitate(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool dragons_dance( Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool bulk_up(   Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool future_sight(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                    bool player, int *NBUFF_P, int *NBUFF_E);
+
+bool blizzard(  Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], 
+                bool player, int *NBUFF_P, int *NBUFF_E);
+//----------------------------------------------------------------------------------------------------------
 
 typedef struct { 
     char nome[20];
     char text[200];
-    void (*hability_function)(void);
+    bool (*hability_function)(Cards *card_player, Cards *card_enemy, Texture2D battleBuffs[], bool player, int *NBUFF_P, int *NBUFF_E);
 }Hability;// HABILIDADES
 
 typedef struct{
@@ -96,6 +115,8 @@ extern float scrollOffset;
 //FUNCTIONS -----------------------------------------------------------------------------------------------------
 
 void ShowCards_Menu(Cards card[], Filters activate_filters, RenderTexture2D TextureCards[]);
+
+bool AnimatedBuffs(Texture2D battleBuffs[], int ID_buff, int n_buff, bool player);
 
 void Vizualizer(CreatMenu card_info, Backgrounds_cards backgrounds_cards, Texture2D poke_img_buffer, Font poke_font);
 

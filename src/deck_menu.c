@@ -8,7 +8,10 @@
 #include <string.h>
 #include "game_screen.h"
 
-void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards)
+void InitDeck(  Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, 
+                Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, 
+                Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards, 
+                Cards *nova_carta)
 {
 
     static bool show_filters = false;
@@ -178,49 +181,58 @@ void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCar
                 img_box = true;
         }
 
-        if (GuiButton((Rectangle){140, 495, 220, 30}, "CONFIRM"))
+        if (GuiButton((Rectangle){140, 495, 220, 30}, "CONFIRM"))//CONFIRM-------------------------------------
         {
-            Cards nova_carta;
 
-            strcpy(nova_carta.nome, CreatCard_buffer->b_name);
-            nova_carta.tipo = (CreatCard_buffer->b_type[0]) ? 'G' : (CreatCard_buffer->b_type[1]) ? 'L'
+            strcpy(nova_carta->nome, CreatCard_buffer->b_name);
+            nova_carta->tipo = (CreatCard_buffer->b_type[0]) ? 'G' : (CreatCard_buffer->b_type[1]) ? 'L'
                                                                 : (CreatCard_buffer->b_type[2])   ? 'D'
                                                                 : (CreatCard_buffer->b_type[3])   ? 'P'
                                                                                                   : 'X';
 
-            nova_carta.hp = (int)CreatCard_buffer->b_hp;
-            nova_carta.ataque = (int)CreatCard_buffer->b_atk;
-            nova_carta.peso = CreatCard_buffer->b_pso;
-            nova_carta.altura = CreatCard_buffer->b_alt;
-            nova_carta.trunfo = CreatCard_buffer->b_trunfo;
-            nova_carta.habilidade = CreatCard_buffer->b_hab;
-            strcpy(nova_carta.img, CreatCard_buffer->p_img); // Se existir na struct Cards
+            nova_carta->hp = (int)CreatCard_buffer->b_hp;
+            nova_carta->ataque = (int)CreatCard_buffer->b_atk;
+            nova_carta->peso = CreatCard_buffer->b_pso;
+            nova_carta->altura = CreatCard_buffer->b_alt;
+            nova_carta->trunfo = CreatCard_buffer->b_trunfo;
+            nova_carta->habilidade = CreatCard_buffer->b_hab;
+            strcpy(nova_carta->img, CreatCard_buffer->p_img); // Se existir na struct Cards
 
-            int num = 1;
+            static int num = 0;
             for (int i = 0; i < TOTAL_CARDS; i++)
             {
-                if (deck[i].tipo == nova_carta.tipo)
+                if (deck[i].tipo == nova_carta->tipo)
                 {
                     num++;
                 }
             }
-            nova_carta.numero = num;
+            nova_carta->numero = num;
 
             // Se for SUPER TRUNFO, desativa qualquer outro do mesmo tipo
-            if (nova_carta.trunfo)
+            if (nova_carta->trunfo)
             {
                 for (int i = 0; i < TOTAL_CARDS; i++)
                 {
-                    if (deck[i].tipo == nova_carta.tipo && deck[i].trunfo)
+                    if (deck[i].tipo == nova_carta->tipo && deck[i].trunfo)
                     {
                         deck[i].trunfo = false;
                     }
                 }
             }
 
-            TOTAL_CARDS++;
-            deck[TOTAL_CARDS] = nova_carta;
-        }
+            Cards *temp = realloc(deck, sizeof(Cards) * (*TOTAL_CARDS+1));
+            if (temp) {
+                
+                deck = temp;
+                deck[*TOTAL_CARDS] = *nova_carta;
+                (memset(nova_carta, 0, sizeof(Cards)));
+                TOTAL_CARDS++;
+            } else {
+                printf("Erro ao realocar memória!\n");
+                exit(1);
+            }
+
+        }// CONFIRM
 
         if (GuiButton((Rectangle){400, 440, 260, 30}, "VISUALIZER"))
         {

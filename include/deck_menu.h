@@ -10,7 +10,10 @@
 #include <string.h>
 #include "game_screen.h"
 
-void InitDeck(Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards);
+void InitDeck(  Sound *enter_menuSound, GameScreen *CurrentScreen, bool *addNewCard_menu, Cards *deck, 
+                Filters *filters_deck, RenderTexture2D *TextureCards, int *TOTAL_CARDS, 
+                Font poke_font, CreatMenu *CreatCard_buffer, Backgrounds_cards *backgrounds_cards, 
+                Cards *nova_carta);
 
 
 #endif

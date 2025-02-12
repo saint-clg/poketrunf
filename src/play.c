@@ -10,10 +10,10 @@
 
 int ROUND = 0;
 int TYPE_MATCH = 0;
+char TERRAIN;
 Cards *player1_deck;
 Cards *player2_deck;
 
-// typedef enum {  +ATK = 0, +HP, +ALT, +PESO, -ATK, -HP, -ALT, -PESO} Buff_code;
 // typedef enum {  HUD = 0, PLAYER1, PLAYER2, TERRAIN1, TERRAIN2, ARROWHUD, ARROWTEXT} BattleHud_code;
 
 void ShuffleDeck(Cards deck[]){
@@ -87,55 +87,64 @@ bool battleAnimation(   Texture2D battleTransition[], float *pos_player1, float 
 
     return transitionPlayed;
 }
+bool AnimatedHability(){
 
-void HabilityAnimation(bool player){
-    static int frame_counter = 0;  // Contador de frames
-    const Rectangle enemy_card = {149, 40, 209, 342};
-    const Rectangle player_card = {376, 40, 209, 342};
-    
-    // Calcula a opacidade com base no contador de frames
-    float opacidade = (sin(frame_counter * 2 * PI / 60.0f) + 1) / 2;  // Pulsação de 0 a 1
+    Rectangle pos_buff = {365,40,209,342};
+    Rectangle pos_debuff = {150, 40, 209, 342};
+    static float opacity = 0.0f;
+    static float timeCount = 0.0f;
+    static bool increasing = true; 
 
-    if(frame_counter < 60) {  // Vai durar 60 frames (1 segundo)
-        frame_counter++;  // Incrementa o contador de frames
-    }
-
-    // Desenha o retângulo com a opacidade calculada
-    if(player){
-        DrawRectangleRec(player_card, (Color){255, 255, 255, (unsigned char)(opacidade * 255)});  // Brilho na carta do jogador
-    } else {
-        DrawRectangleRec(enemy_card, (Color){255, 255, 255, (unsigned char)(opacidade * 255)});  // Brilho na carta do inimigo
-    }
-}
-
-void BattleUtilsAnimation(  Texture2D battleUtils[], int sprite_buff, int sprite_debuff, 
-                            int countp_buff, int counte_buff, bool player1, bool debuff){
-
-    const int pos_x_player = 10 + (countp_buff * 108);
-    static int pos_y_player = 600;
-    const int pos_x_enemy = 240 + (counte_buff * 85);
-    static int pos_y_enemy = -33;
-    static int frame_counter = 0;
-
-    if(player1){
-        if(frame_counter < 43){
-            pos_y_player -= 5;
-        }else if(frame_counter < 60){
-            pos_y_enemy += 2.24f;
+    if(increasing){
+        opacity += 5;
+        if(opacity > 255){
+            opacity = 255;
+            increasing = false;
         }
-    }
+    }else {
+        opacity -= 5;
+        if(opacity < 0){
+            opacity = 0;
+            increasing = true;
+        }
+    }// ANIMAÇÃO DE PISCAR A CARTA, VAI E VOLTA
 
-    if(!player1){
-        if(frame_counter < 17){
-            pos_y_enemy += 2.24f;
-        }else if(frame_counter < 60){
-        pos_y_player += 5;
-        }   
-    }
+    DrawRectangleRec(pos_buff, (Color){255,255,255, (unsigned char)opacity}); // WHITE
+    DrawRectangleRec(pos_debuff, (Color){255,0,0, (unsigned char)opacity}); // RED
+    timeCount++;
+    if(timeCount > 120){
 
+        timeCount = 0;
+        opacity = 0; 
+
+        return false;
+    }
+    
+    return true;
 }
 
-bool AnimatedTextBox(char text_box[], Font battle_hud_font, float *frameCounter) {
+void AnimatedPlaying(Texture2D player1_card, Texture2D player2_card, int *Playing){
+
+    static float frameCount = 0.0f;
+    
+    static Vector2 pos_card = {580,85};
+
+    if(pos_card.x != 365 && pos_card.y != 40){
+
+        pos_card.x -= 5;
+        pos_card.y -= 1;
+
+    }else{
+        *Playing == 2;
+    } 
+        
+    DrawTexturePro(player1_card, (Rectangle){0, 0, 220, -360},
+                   (Rectangle){pos_card.x, pos_card.y, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
+    DrawTexturePro(player2_card, (Rectangle){0, 0, 220, -360},
+                   (Rectangle){150, 40, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
+}
+
+bool AnimatedTextBox(char text_box[], Font battle_hud_font, float *frameCounter){
     bool end_subtext = false;
        
         // Acelera a animação do texto quando 'Z' é pressionado ou o texto for completo
@@ -151,8 +160,55 @@ bool AnimatedTextBox(char text_box[], Font battle_hud_font, float *frameCounter)
     return end_subtext;
 }
 
+/*bool Playing(Cards player1_deck, Cards player2_deck, int *stats_choice){
+
+    bool player_round;
+    static bool end_hability = false;
+    float player1_stats, player2_stats;
+    bool player_wins;
+
+    if(ROUND %2 == 0){
+
+        player_round = true;
+    }else player_round = false;
+
+    if(player_round){
+        if(hability[player1_deck.habilidade].hability_function(player1_deck,palyer2_deck,*player_round)){
+            if(hability[player2_deck.habilidade].hability_function(player1_deck,palyer2_deck,*player_round)){
+
+                end_hability = true;
+            }
+        }
+        if(end_hability){
+                
+            }
+            if(*stats_choice == 0){
+                player1_stats = player1_deck.ataque;
+                player2_stats = player2_deck.ataque;
+            }else if (*stats_choice == 1){
+                player1_stats = player1_deck.hp;
+                player2_stats = player2_deck.hp;
+            }else if (*stats_choice == 2){
+                player1_stats = player1_deck.altura;
+                player2_stats = player2_deck.altura;
+            }else if (*stats_choice == 3){
+                player1_stats = player1_deck.peso;
+                player2_stats = player2_deck.peso;
+            }
+
+            if(player1_stats > player1_stats){
+
+                player_wins = true;
+            }else player_wins = false;
+
+    }
+
+
+    return player_wins;
+}*/
+
 void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red, Sound walk_menuSound, 
-                Cards player1_deck[], RenderTexture2D CardTexture[])                
+                Cards player1_deck[], RenderTexture2D CardTexture[], int *Playing)                
 {
 
     const char battle_options[8][10] = {"JOGAR", "DECK", "ITENS", "HAB", "ATK", "HP", "ALTURA", "PESO"};
@@ -169,6 +225,8 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
     static bool end_subText = false;
     static int count_deck = 0;
     char text_box[300];
+
+    printf("%d", *Playing);
 
     if(!hab){
         if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_LEFT)) {
@@ -201,16 +259,16 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
         PlaySound(walk_menuSound);
         if(!play && !itens && !hab){
             if (walk_battle_options == 0) play = true;
-            if (walk_battle_options == 1){} deck = true;
+            if (walk_battle_options == 1) //deck
             if (walk_battle_options == 2) itens = true;
             if (walk_battle_options == 3) hab = true;
 
         }   
         if(play){
-                if(walk_battle_options == 0); //escolhe ataque
-                if(walk_battle_options == 1);//escolhe hp
-                if(walk_battle_options == 2); //escolhe altura
-                if(walk_battle_options == 3); //escolhe peso
+                if(walk_battle_options == 0) *Playing = 1;
+                if(walk_battle_options == 1) *Playing = 1;
+                if(walk_battle_options == 2) *Playing = 1;
+                if(walk_battle_options == 3) *Playing = 1;
         }
     }// INTERAÇÃO DE CONFIRMAÇÃO
 
@@ -236,28 +294,6 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
         }
     }// OPÇÕES PARA JOGA
 
-    if(deck){
-        // Desenha a seta vermelha para mostrar a habilidade
-        DrawTextureEx(Arrow_red, arrowr_position, 90.0f, 3.5, RED);
-
-        for(int i = 0; i < TOTAL_CARDS; i++){
-            
-            if(player1_deck[i] != NULL){
-
-                count_deck++;
-            }
-        }
-
-        snprintf(text_box, sizeof(text_box), "SEU DE CONTÉM %d CARTAS\n", count_deck);	
-        
-
-        end_subText = AnimatedTextBox(text_box, battle_hud_font, &frameCounter);
-        if(end_subText && IsKeyPressed(KEY_Z)){
-
-            frameCounter = 0.0f;
-            hab = false;
-        }
-    }
     if (hab)
     {
         // Desenha a seta vermelha para mostrar a habilidade
@@ -278,7 +314,8 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
     }
 }
 
-void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Font battle_hud_font, Cards player1_deck[])
+void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Font battle_hud_font, 
+                        Cards player1_deck[], int *Playing)
 {
     static bool TransitionPlayed = false;
     char match_stats[50];
@@ -288,9 +325,14 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
     static float pos_player2 = -307;  // 64x64     210x210
     static float pos_terrain1 = 832;  // 290x80    521x143
     static float pos_terrain2 = -372; // 155x50   341x110
+
+    static Vector2 player_buffs = {10,600};
+    static Vector2 enemy_buffs = {240,-33};
     
     // CARD TEXTURES POS
     static Vector2 pos_card = {580,85}; // 220x360  580x85
+
+    printf("%d", *Playing);
  
     // DESENHA OS JOGADORES E HUDS NÃO CLICAVEIS
     DrawTexturePro(battleHUD[0], (Rectangle){0, 0, 240, 50},
@@ -305,14 +347,15 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
                    (Rectangle){pos_player1, 150, 285, 285}, (Vector2){0,0}, 0, WHITE);
    
     // DESENHA AS INFORMAÇÕES DURANTE A PARTIDA
-    if(TransitionPlayed){
+    if(TransitionPlayed && *Playing == 0){
 
         DrawRectangleRounded((Rectangle){0,0,230,225}, 0.3, 10, (Color){0, 0, 0, 128});
         snprintf(match_stats, sizeof(match_stats), "%d FPS\nTYPE\nTERRENO\nROUND %d\n DECK PLAYER1 %d\n, DECK PLAYER2 %d",
                 GetFPS(), ROUND, 16, 16);
         DrawTextEx(battle_hud_font, match_stats, (Vector2){10, 10}, 25, 0.2, WHITE);
         DrawRectangleRoundedLines((Rectangle){0,0,230,225}, 0.3, 10, RED);// arrumar para ficar melhor dps
-
+        
+        // CARTA
         DrawTexturePro(player1_deck[ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
                    (Rectangle){pos_card.x, pos_card.y, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
     }
@@ -322,4 +365,13 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
     if(!TransitionPlayed){
         TransitionPlayed =  battleAnimation(battleTransition, &pos_player1, &pos_player2, &pos_terrain1, &pos_terrain2);// anima a transição
     }
+
+    //-------------------------------------------------------------------------------------------------
+
+    if(*Playing > 0 ){
+        
+        AnimatedPlaying(player1_deck[ROUND].card_texture.texture, player2_deck[ROUND].card_texture.texture, Playing);
+    }
+
+
 }
