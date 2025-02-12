@@ -78,6 +78,9 @@ int main()
 
     RenderTexture2D TextureCards[TOTAL_CARDS];
 
+    Cards *player1_deck;
+    Cards *player2_deck;
+
     player1_deck = malloc(TOTAL_CARDS * sizeof(Cards));
     player2_deck = malloc(TOTAL_CARDS * sizeof(Cards));
 
@@ -89,7 +92,8 @@ int main()
     const char *menu_options[] = {"Play", "Deck", "Options", "Exit"};
 
     int Playing = 0;
-
+    
+    int ROUND = 0;
     int NBUFF_P = 0;
     int NBUFF_E = 0;
 
@@ -172,39 +176,75 @@ int main()
             static bool load_round = false;
             const char  InicializeGame[100] = "Inicializando Jogo...";
             static float frameCounter = 0; 
+            static int end_Animatedplaying = 0;
+            static int choice; 
 
-            ROUND = 0;
 
             BeginDrawing();
 
             ClearBackground(WHITE);
-            DrawPlayTextures(battleHUD,battleTransition,poke_font,player1_deck, &Playing);
-            battleHud(poke_font,battleHUD[5], battleHUD[6], walk_menuSound, player1_deck, TextureCards, &Playing);
+            DrawPlayTextures(battleHUD,battleTransition,poke_font,player1_deck, player2_deck, &Playing, &ROUND);
+            battleHud(  poke_font,battleHUD[5], battleHUD[6], walk_menuSound, player1_deck, 
+                        TextureCards, &Playing, &ROUND, &choice);
             if(InicializateGame){
-                ShuffleDeck(deck);
+                ShuffleDeck(deck, player1_deck, player2_deck);
+                for(int i =0; i < TOTAL_CARDS; i++){
+
+                    printf("eu:  %s\n", player1_deck[i].nome);
+                    printf("vc: %s\n", player2_deck[i].nome);
+                }
                 InicializateGame = false;
+                Playing = 0;
                 printf("PREPARANDO DECK...");
             }
             if(Playing == 1){
                 if(!load_round){
                     NBUFF_E = 0;
                     NBUFF_P = 0;
-                    ROUND++;
                     load_round = true;
                     printf("CARREGANDO ROUND...");
                 }
             }
-            if(Playing == 2){
-                AnimatedHability();
+            if(Playing == 2 && ROUND % 2 == 0){
+                AnimatedHability(&Playing);
+                hability[player1_deck[ROUND].habilidade].hability_function(&player1_deck[ROUND],&player2_deck[ROUND],
+                    battleBuffs, 1, &NBUFF_P, &NBUFF_P);
+                printf("atk: %d, hp: %d, alt: %f, pso: %f", player1_deck[ROUND].ataque, player1_deck[ROUND].hp,
+                                                            player1_deck[ROUND].altura, player1_deck[ROUND].peso);
             }
-            if(Playing == 3){
+            if(Playing == 2 && ROUND % 2 != 0){
+                AnimateHabilityRev(&Playing);
+                hability[player2_deck[ROUND].habilidade].hability_function(&player2_deck[ROUND],&player1_deck[ROUND],
+                    battleBuffs, 0, &NBUFF_P, &NBUFF_P);
+                printf("atk: %d, hp: %d, alt: %f, pso: %f", player2_deck[ROUND].ataque, player2_deck[ROUND].hp,
+                                                            player2_deck[ROUND].altura, player2_deck[ROUND].peso);
+            }
+            if(Playing == 3 && ROUND % 2 == 0){
+                AnimateHabilityRev(&Playing);
+                hability[player2_deck[ROUND].habilidade].hability_function(&player2_deck[ROUND],&player1_deck[ROUND],
+                    battleBuffs, 0, &NBUFF_P, &NBUFF_P);
+                printf("atk: %d, hp: %d, alt: %f, pso: %f", player2_deck[ROUND].ataque, player2_deck[ROUND].hp,
+                                                            player2_deck[ROUND].altura, player2_deck[ROUND].peso);
+            }
+            if(Playing == 3 && ROUND % 2 != 0){
+                AnimatedHability(&Playing);
+                hability[player1_deck[ROUND].habilidade].hability_function(&player1_deck[ROUND],&player2_deck[ROUND],
+                                                                            battleBuffs, 1, &NBUFF_P, &NBUFF_P);
+                printf("atk: %d, hp: %d, alt: %f, pso: %f", player1_deck[ROUND].ataque, player1_deck[ROUND].hp,
+                                                            player1_deck[ROUND].altura, player1_deck[ROUND].peso);
+                                            
+            }                                                         
+            if(Playing == 4){
 
-                /*hability[player1_deck[ROUND].habilidade].hability_function( player1_deck[ROUND],
-                                                                            player2_deck[ROUND],
-                                                                            battleBuffs,1,&NBUFF_P,&NBUFF_E);*/
-                printf("HABILIDADEEEEEEEEEEE!!");
+               if(Comparation(player1_deck[ROUND], player2_deck[ROUND], &choice)){
+
+                    printf("PLAYER1 VENCEU!"); 
+               }else printf("PLAYER2 VENCEU!");
+
+               ROUND ++;
+               Playing = 0;
+               load_round = false;
             }
-            
             EndDrawing();
         }
 

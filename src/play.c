@@ -1,6 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
-#include <stdio.h>7
+#include <stdio.h>
 #include <math.h>
 #include <string.h>
 #include "raylib.h"
@@ -8,42 +8,38 @@
 #include "play.h"
 #include "struct_card.h"
 
-int ROUND = 0;
 int TYPE_MATCH = 0;
 char TERRAIN;
-Cards *player1_deck;
-Cards *player2_deck;
 
 // typedef enum {  HUD = 0, PLAYER1, PLAYER2, TERRAIN1, TERRAIN2, ARROWHUD, ARROWTEXT} BattleHud_code;
 
-void ShuffleDeck(Cards deck[]){
-
+void ShuffleDeck(Cards *deck, Cards *player1_deck, Cards *player2_deck) {
     int indices[TOTAL_CARDS];
 
+    // Preenche o array de índices com valores 0 até TOTAL_CARDS - 1
     for (int i = 0; i < TOTAL_CARDS; i++) {
         indices[i] = i;
     }
 
     srand(time(NULL));
 
-    // FISHER-YETS
+    // FISHER-YATES Shuffle
     for (int i = TOTAL_CARDS - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // INDICE
-        // TROCA
+        int j = rand() % (i + 1);  // Escolhe um índice aleatório
+        // Troca os índices
         int temp = indices[i];
         indices[i] = indices[j];
         indices[j] = temp;
     }
 
+    // Distribui as cartas aleatoriamente entre os dois jogadores
     for (int i = 0; i < TOTAL_CARDS; i++) {
-        if(i  % 2 ==0){
-            player1_deck[i] = deck[indices[i]];
-        }else
-        {
-            player2_deck[i] = deck[indices[i]];
+        if (i % 2 == 0) {
+            player1_deck[i / 2] = deck[indices[i]];  // Carta para o player1
+        } else {
+            player2_deck[i] = deck[indices[i]];  // Carta para o player2
         }
     }
-    
 }
 
 bool battleAnimation(   Texture2D battleTransition[], float *pos_player1, float *pos_player2, 
@@ -112,15 +108,51 @@ void AnimatedHability(int *Playing){
     DrawRectangleRec(pos_buff, (Color){255,255,255, (unsigned char)opacity}); // WHITE
     DrawRectangleRec(pos_debuff, (Color){255,0,0, (unsigned char)opacity}); // RED
     timeCount++;
-    if(timeCount > 120){
+    printf("%f\n", timeCount);
+    if(timeCount >= 120){
+
+        timeCount = 0;
+        opacity = 0;
+        (*Playing)++;
+        return;
+    }
+
+
+}
+
+void AnimateHabilityRev(int *Playing){
+  
+    Rectangle pos_debuff = {365,40,209,342};
+    Rectangle pos_buff = {150, 40, 209, 342};
+    static float opacity = 0.0f;
+    static float timeCount = 0.0f;
+    static bool increasing = true; 
+
+    if(increasing){
+        opacity += 5;
+        if(opacity > 255){
+            opacity = 255;
+            increasing = false;
+        }
+    }else {
+        opacity -= 5;
+        if(opacity < 0){
+            opacity = 0;
+            increasing = true;
+        }
+    }// ANIMAÇÃO DE PISCAR A CARTA, VAI E VOLTA
+
+    DrawRectangleRec(pos_buff, (Color){255,255,255, (unsigned char)opacity}); // WHITE
+    DrawRectangleRec(pos_debuff, (Color){255,0,0, (unsigned char)opacity}); // RED
+    timeCount++;
+    printf("%f\n", timeCount);
+    if(timeCount >= 120){
 
         timeCount = 0;
         opacity = 0; 
-
-        *Playing = 3;
-
-    }
-
+        (*Playing)++;
+        return;
+    }  
 }
 
 void AnimatedPlaying(Texture2D player1_card, Texture2D player2_card, int *Playing){
@@ -164,55 +196,37 @@ bool AnimatedTextBox(char text_box[], Font battle_hud_font, float *frameCounter)
     return end_subtext;
 }
 
-/*bool Playing(Cards player1_deck, Cards player2_deck, int *stats_choice){
+bool Comparation(Cards player1_deck, Cards player2_deck, int *stats_choice){
 
-    bool player_round;
-    static bool end_hability = false;
-    float player1_stats, player2_stats;
-    bool player_wins;
+    if(stats_choice == 1){
 
-    if(ROUND %2 == 0){
+        if(player1_deck.ataque > player2_deck.ataque){
+            return true;
+        }else return false;
+    }
+    if(stats_choice == 2){
 
-        player_round = true;
-    }else player_round = false;
+        if(player1_deck.hp > player2_deck.hp){
+            return true;
+        }else return false;
+    }
+    if(stats_choice == 3){
 
-    if(player_round){
-        if(hability[player1_deck.habilidade].hability_function(player1_deck,palyer2_deck,*player_round)){
-            if(hability[player2_deck.habilidade].hability_function(player1_deck,palyer2_deck,*player_round)){
-
-                end_hability = true;
-            }
-        }
-        if(end_hability){
-                
-            }
-            if(*stats_choice == 0){
-                player1_stats = player1_deck.ataque;
-                player2_stats = player2_deck.ataque;
-            }else if (*stats_choice == 1){
-                player1_stats = player1_deck.hp;
-                player2_stats = player2_deck.hp;
-            }else if (*stats_choice == 2){
-                player1_stats = player1_deck.altura;
-                player2_stats = player2_deck.altura;
-            }else if (*stats_choice == 3){
-                player1_stats = player1_deck.peso;
-                player2_stats = player2_deck.peso;
-            }
-
-            if(player1_stats > player1_stats){
-
-                player_wins = true;
-            }else player_wins = false;
-
+        if(player1_deck.altura > player2_deck.altura){
+            return true;
+        }else return false;
+    }
+    if(stats_choice == 4){
+        if(player1_deck.peso > player2_deck.peso){
+            return true;
+        }else return false;
     }
 
-
-    return player_wins;
-}*/
+    return false;
+}
 
 void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red, Sound walk_menuSound, 
-                Cards player1_deck[], RenderTexture2D CardTexture[], int *Playing)                
+                Cards player1_deck[], RenderTexture2D CardTexture[], int *Playing, int *ROUND, int *choice)                
 {
 
     const char battle_options[8][10] = {"JOGAR", "DECK", "ITENS", "HAB", "ATK", "HP", "ALTURA", "PESO"};
@@ -228,11 +242,12 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
     static bool hab = false;
     static bool end_subText = false;
     static int count_deck = 0;
+    static bool z_pressed = false;
     char text_box[300];
 
     printf("%d", *Playing);
 
-    if(!hab){
+    if(!hab && *Playing == 0){
         if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_LEFT)) {
             PlaySound(walk_menuSound);
 
@@ -261,6 +276,7 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
 
     if(IsKeyPressed(KEY_Z)){
         PlaySound(walk_menuSound);
+        z_pressed = true;
         if(!play && !itens && !hab){
             if (walk_battle_options == 0) play = true;
             if (walk_battle_options == 1) //deck
@@ -269,10 +285,26 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
 
         }   
         if(play){
-                if(walk_battle_options == 0) *Playing = 1;
-                if(walk_battle_options == 1) *Playing = 1;
-                if(walk_battle_options == 2) *Playing = 1;
-                if(walk_battle_options == 3) *Playing = 1;
+                if(walk_battle_options == 0){
+
+                    *choice = 1;
+                    (*Playing)++;
+                } 
+                if(walk_battle_options == 1){
+
+                    *choice = 2;
+                    (*Playing)++;
+                } 
+                if(walk_battle_options == 2){
+                    
+                    *choice = 3;
+                    (*Playing)++;
+                } 
+                if(walk_battle_options == 3){
+                    
+                    *choice = 4;
+                    (*Playing)++;
+                } 
         }
     }// INTERAÇÃO DE CONFIRMAÇÃO
 
@@ -304,9 +336,9 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
         DrawTextureEx(Arrow_red, arrowr_position, 90.0f, 3.5, RED);
 
         snprintf(text_box, sizeof(text_box), "HABILIDADE DE %s\n%s: %s", 
-                player1_deck[ROUND].nome, 
-                hability[player1_deck[ROUND].habilidade].nome, 
-                hability[player1_deck[ROUND].habilidade].text);
+                player1_deck[*ROUND].nome, 
+                hability[player1_deck[*ROUND].habilidade].nome, 
+                hability[player1_deck[*ROUND].habilidade].text);
         
 
         end_subText = AnimatedTextBox(text_box, battle_hud_font, &frameCounter);
@@ -316,10 +348,16 @@ void battleHud( Font battle_hud_font, Texture2D Arrow_black, Texture2D Arrow_red
             hab = false;
         }
     }
+
+    if(z_pressed){
+        if(GetTime() - last_move > 0.025){
+            z_pressed = false;
+        }
+    }
 }
 
 void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Font battle_hud_font, 
-                        Cards player1_deck[], int *Playing)
+                        Cards player1_deck[], Cards player2_deck[], int *Playing, int *ROUND)
 {
     static bool TransitionPlayed = false;
     char match_stats[50];
@@ -355,12 +393,12 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
 
         DrawRectangleRounded((Rectangle){0,0,230,225}, 0.3, 10, (Color){0, 0, 0, 128});
         snprintf(match_stats, sizeof(match_stats), "%d FPS\nTYPE\nTERRENO\nROUND %d\n DECK PLAYER1 %d\n, DECK PLAYER2 %d",
-                GetFPS(), ROUND, 16, 16);
+                GetFPS(), *ROUND, 16, 16);
         DrawTextEx(battle_hud_font, match_stats, (Vector2){10, 10}, 25, 0.2, WHITE);
         DrawRectangleRoundedLines((Rectangle){0,0,230,225}, 0.3, 10, RED);// arrumar para ficar melhor dps
         
         // CARTA
-        DrawTexturePro(player1_deck[ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
+        DrawTexturePro(player1_deck[*ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
                    (Rectangle){pos_card.x, pos_card.y, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
     }
     // -----------------------------------------------------------------------------------------------
@@ -372,9 +410,16 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
 
     //-------------------------------------------------------------------------------------------------
 
-    if(*Playing > 0 ){
+    if(*Playing == 1 ){
         
-        AnimatedPlaying(player1_deck[ROUND].card_texture.texture, player2_deck[ROUND].card_texture.texture, Playing);
+        AnimatedPlaying(player1_deck[*ROUND].card_texture.texture, player2_deck[*ROUND].card_texture.texture, Playing);
+    }
+    if(*Playing > 1){
+
+        DrawTexturePro(player1_deck[*ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
+                   (Rectangle){365, 40, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
+        DrawTexturePro(player2_deck[*ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
+                   (Rectangle){150, 40, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);
     }
 
 

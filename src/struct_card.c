@@ -101,14 +101,14 @@ void InitAssets(Cards card[], Backgrounds_cards *backgrounds_cards, Texture2D *p
     battleHUD[5] = LoadTexture(".\\assets\\img\\battle\\arrow_black.png");
     battleHUD[6] = LoadTexture(".\\assets\\img\\battle\\arrow_red.png");
 
-    battleBuffs[0] = LoadTexture(".\\assets\\img\\battle\\buffs\\-atk.png");
-    battleBuffs[1] = LoadTexture(".\\assets\\img\\battle\\buffs\\-hp.png");
-    battleBuffs[2] = LoadTexture(".\\assets\\img\\battle\\buffs\\-alt.png");
-    battleBuffs[3] = LoadTexture(".\\assets\\img\\battle\\buffs\\-pso.png");
-    battleBuffs[4] = LoadTexture(".\\assets\\img\\battle\\buffs\\+atk.png");
-    battleBuffs[5] = LoadTexture(".\\assets\\img\\battle\\buffs\\+hp.png");
-    battleBuffs[6] = LoadTexture(".\\assets\\img\\battle\\buffs\\+alt.png");    
-    battleBuffs[7] = LoadTexture(".\\assets\\img\\battle\\buffs\\+pso.png");
+    battleBuffs[0] = LoadTexture(".\\assets\\img\\battle\\latk.png");
+    battleBuffs[1] = LoadTexture(".\\assets\\img\\battle\\lhp.png");
+    battleBuffs[2] = LoadTexture(".\\assets\\img\\battle\\lalt.png");
+    battleBuffs[3] = LoadTexture(".\\assets\\img\\battle\\lpso.png");
+    battleBuffs[4] = LoadTexture(".\\assets\\img\\battle\\uatk.png");
+    battleBuffs[5] = LoadTexture(".\\assets\\img\\battle\\uhp.png");
+    battleBuffs[6] = LoadTexture(".\\assets\\img\\battle\\ualt.png");    
+    battleBuffs[7] = LoadTexture(".\\assets\\img\\battle\\upso.png");
 
     TypesTextures[0] = LoadTexture(".\\assets\\img\\battle\\types\\ice.png");
     TypesTextures[1] = LoadTexture(".\\assets\\img\\battle\\types\\fighting.png");
