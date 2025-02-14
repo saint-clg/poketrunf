@@ -34,6 +34,9 @@ run:
 clean:
 	$(RM) ./main.exe
 
+debug:
+	gdb $(BIN) 
+
 
 valgrind:
 	valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-leak-kinds=all --show-reachable=yes ./.main.exe

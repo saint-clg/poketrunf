@@ -37,7 +37,7 @@ void ShuffleDeck(Cards *deck, Cards *player1_deck, Cards *player2_deck) {
         if (i % 2 == 0) {
             player1_deck[i / 2] = deck[indices[i]];  // Carta para o player1
         } else {
-            player2_deck[i] = deck[indices[i]];  // Carta para o player2
+            player2_deck[i / 2] = deck[indices[i]];  // Carta para o player2
         }
     }
 }
@@ -415,6 +415,8 @@ void DrawPlayTextures(  Texture2D battleHUD[], Texture2D battleTransition[], Fon
         AnimatedPlaying(player1_deck[*ROUND].card_texture.texture, player2_deck[*ROUND].card_texture.texture, Playing);
     }
     if(*Playing > 1){
+        printf("%s", player1_deck[*ROUND].nome);
+        printf("%s", player2_deck[*ROUND].nome);
 
         DrawTexturePro(player1_deck[*ROUND].card_texture.texture, (Rectangle){0, 0, 220, -360},
                    (Rectangle){365, 40, 209, 342}, (Vector2){0, 0}, 0.0f, WHITE);

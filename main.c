@@ -78,11 +78,8 @@ int main()
 
     RenderTexture2D TextureCards[TOTAL_CARDS];
 
-    Cards *player1_deck;
-    Cards *player2_deck;
-
-    player1_deck = malloc(TOTAL_CARDS * sizeof(Cards));
-    player2_deck = malloc(TOTAL_CARDS * sizeof(Cards));
+    Cards player1_deck[32];
+    Cards player2_deck[32];
 
     CreatCards(deck, backgrounds_cards, pokemon_img, TextureCards, poke_font);
 
@@ -169,7 +166,6 @@ int main()
         //--------------------------------------------------------------------------- PLAY
         if (CurrentScreen == PLAY)
         {   
-            printf("%d", Playing);
 
             static bool InicializateGame = true;
             static bool end_AnimatedPlaying;
@@ -189,9 +185,10 @@ int main()
             if(InicializateGame){
                 ShuffleDeck(deck, player1_deck, player2_deck);
                 for(int i =0; i < TOTAL_CARDS; i++){
+                }
 
-                    printf("eu:  %s\n", player1_deck[i].nome);
-                    printf("vc: %s\n", player2_deck[i].nome);
+                for(int t = 0; t < 32; t++){
+                    printf("DECK: %s\n", deck[t].nome);
                 }
                 InicializateGame = false;
                 Playing = 0;
